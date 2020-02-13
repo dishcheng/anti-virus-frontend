@@ -5,7 +5,7 @@
   "productName": "test",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
-  "author": "caicheng <caicheng@hooook.com>",
+  "author": "caicheng <caicheng@lvbaoyun.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "axios": "^0.19.2",
     "quasar": "^1.0.0"
   },
   "devDependencies": {

@@ -6,8 +6,7 @@ module.exports = function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
-    boot: [
-    ],
+    boot: [],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: [
@@ -46,7 +45,21 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Notify',//载入alert提示，https://github.com/quasarframework/quasar-template-meteor/issues/29
+        'QAjaxBar',//http://www.quasarchs.com/vue-components/ajax-bar
+        'QBtn',//http://www.quasarchs.com/vue-components/button
+        'LoadingBar',//http://www.quasarchs.com/quasar-plugins/loading-bar
+        'QInnerLoading',//http://www.quasarchs.com/vue-components/inner-loading
+      ],
+      config: {
+        loadingBar: {
+          color: 'purple',
+          size: '15px',
+          position: 'bottom'
+        }
+      }
+
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -140,7 +153,6 @@ module.exports = function (ctx) {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
       id: 'org.cordova.quasar.app'
     },
-
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
     capacitor: {

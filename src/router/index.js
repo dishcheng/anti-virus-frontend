@@ -2,8 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import routes from './routes'
+import axios from '../boot/axios'
 
 Vue.use(VueRouter)
+Vue.use(axios)
 
 /*
  * If not building with SSR mode, you can
