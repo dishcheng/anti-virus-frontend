@@ -14,7 +14,7 @@
                         v-for="(item,index) in bannerList" :key="index" :name="index"
                         :img-src="'http://lby-img-dev.tinali.cn/'+item.img_uri"/>
     </q-carousel>
-    <p v-for="(item,index) in bannerList">{{item}}</p>
+<!--    <p v-for="(item,index) in bannerList">{{item}}</p>-->
   </div>
 </template>
 

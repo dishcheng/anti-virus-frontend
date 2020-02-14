@@ -1,10 +1,15 @@
 <template>
   <q-page>
     <banner v-bind:banner-list="bannerList"></banner>
+    <navigation></navigation>
+
+
   </q-page>
 </template>
 <script>
   import Banner from '../components/Index/Banner'
+  import Navigation from '../components/Index/Navigation'
+
   export default {
     name: 'PageIndex',
     data () {
@@ -13,7 +18,8 @@
       }
     },
     components: {
-      Banner
+      Banner,
+      Navigation
     },
     methods: {
       loadData () {
