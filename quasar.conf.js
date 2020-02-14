@@ -51,6 +51,9 @@ module.exports = function (ctx) {
         'QBtn',//http://www.quasarchs.com/vue-components/button
         'LoadingBar',//http://www.quasarchs.com/quasar-plugins/loading-bar
         'QInnerLoading',//http://www.quasarchs.com/vue-components/inner-loading
+        'QCarousel',
+        'QCarouselControl',
+        'QCarouselSlide',
       ],
       config: {
         loadingBar: {
