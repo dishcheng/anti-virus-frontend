@@ -2,19 +2,34 @@
   <q-page>
     <banner v-bind:banner-list="bannerList"></banner>
     <navigation v-bind:navigation-list="navigationList"></navigation>
-
-
+    <div class="productList">
+      <product-list-item v-bind:item='item' v-for="(item,index) in 1000"></product-list-item>
+    </div>
   </q-page>
 </template>
 <script>
   import Banner from '../components/Index/Banner'
   import Navigation from '../components/Index/Navigation'
+  import ProductListItem from '../components/Common/ProductListItem'
   import Icon from '../assets/view.png'
+
   export default {
     name: 'PageIndex',
+    components: {
+      ProductListItem,
+      Banner,
+      Navigation
+    },
     data () {
       return {
         bannerList: [],
+        ProductListData: [
+          {
+            'icon': Icon,
+            'text': '美食',
+            'to': '',//todo::xxxxx
+          },
+        ],
         navigationList: [
           {
             'icon': Icon,
@@ -42,10 +57,6 @@
         ],
       }
     },
-    components: {
-      Banner,
-      Navigation
-    },
     methods: {
       loadData () {
         let that = this
@@ -69,3 +80,10 @@
     }
   }
 </script>
+
+<style scoped>
+  .productList {
+    padding: 5px 10px;
+    /*padding-left: 10px;*/
+  }
+</style>
