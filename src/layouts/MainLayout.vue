@@ -6,22 +6,20 @@
     <q-footer class="bg-white text-primary footer">
       <q-card>
         <q-tabs
-          fixed-bottom
+          indicator-color="transparent"
+          active-color="orange"
+          style="color: #999999"
           v-model="tab"
+          class="text-grey-6"
         >
-          <q-route-tab name="index" label="首页"
-                       to="/"
-                       exact/>
-          <q-route-tab name="order" label="订单"
-                       to="/order"
-                       exact
-          />
-          <q-route-tab name="articles" label="玩赚"
-                       to="/mails"
-                       exact/>
-          <q-route-tab name="mine" label="我的"
-                       to="/mails"
-                       exact/>
+          <q-route-tab
+            v-for="(item,index) in menuItems"
+            :name="item.bind_name"
+            :to="item.to"
+            :icon="tab===item.bind_name?item.active_icon:item.icon"
+            exact>
+            <span class="column" style="font-size: 10px">{{item.text}}</span>
+          </q-route-tab>
         </q-tabs>
       </q-card>
     </q-footer>
@@ -225,6 +223,7 @@
 
 <script>
   import EssentialLink from 'components/EssentialLink'
+  import IndexIcon from '../assets/view.png'
 
   export default {
     name: 'MainLayout',
@@ -234,7 +233,37 @@
         lorem: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo.',
         visible: false,
         showSimulatedReturnData: false,
-        tab: 'index'
+        tab: 'index',
+        menuItems: [
+          {
+            'text': '首页',
+            'bind_name': 'index',
+            'icon': 'img:/statics/icons/view.png',
+            'active_icon': 'img:/statics/icons/favicon.ico',
+            'to': '/',
+          },
+          {
+            'text': '订单',
+            'bind_name': 'order',
+            'icon': 'img:/statics/icons/view.png',
+            'active_icon': 'img:/statics/icons/favicon.ico',
+            'to': '/order',
+          },
+          {
+            'text': '玩赚',
+            'bind_name': 'play',
+            'icon': 'img:/statics/icons/view.png',
+            'active_icon': 'img:/statics/icons/favicon.ico',
+            'to': '/',
+          },
+          {
+            'text': '我的',
+            'bind_name': 'mine',
+            'icon': 'img:/statics/icons/view.png',
+            'active_icon': 'img:/statics/icons/favicon.ico',
+            'to': '/',
+          },
+        ]
       }
     },
     components: {
@@ -298,7 +327,13 @@
     bottom: 0;
     box-sizing: border-box;
     background: rgb(248, 248, 248);
+    height: 49px;
     /*width: 100%;*/
+  }
+
+  .navImg {
+    width: 29px;
+    height: 29px;
   }
 
 </style>

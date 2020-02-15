@@ -57,13 +57,14 @@ module.exports = function (ctx) {
         'QFooter',//http://www.quasarchs.com/layout/header-and-footer
         'QTabPanels',
         'QTabPanel',
-        'QRouteTab'
+        'QRouteTab',
+        'QIcon'
       ],
       config: {
         loadingBar: {
           color: 'purple',
-          size: '15px',
-          position: 'bottom'
+          size: '2px',
+          position: 'top'
         }
       }
 

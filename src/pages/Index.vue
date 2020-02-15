@@ -66,12 +66,12 @@
             that.bannerList = response.data.data
           })
           .catch(() => {
-            that.$q.notify({
-              color: 'negative',
-              position: 'top',
-              message: 'Loading failed',
-              icon: 'report_problem'
-            })
+            // that.$q.notify({
+            //   color: 'negative',
+            //   position: 'top',
+            //   message: 'Loading failed',
+            //   icon: 'report_problem'
+            // })
           })
       },
     },

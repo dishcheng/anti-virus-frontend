@@ -15,7 +15,6 @@
     },
     methods: {},
     created () {
-      this.loadData()
     }
   }
 </script>
