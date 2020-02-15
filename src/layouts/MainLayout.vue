@@ -1,15 +1,29 @@
 <template>
-
-  <q-layout >
+  <q-layout>
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
-    <q-footer class="bg-white text-primary">
-      <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey" v-model="tab">
-        <q-tab name="index" label="首页"/>
-        <q-tab name="order" label="订单" />
-        <q-tab name="articles" label="Articles" />
-      </q-tabs>
+    <q-footer class="bg-white text-primary footer">
+      <q-card>
+        <q-tabs
+          fixed-bottom
+          v-model="tab"
+        >
+          <q-route-tab name="index" label="首页"
+                       to="/"
+                       exact/>
+          <q-route-tab name="order" label="订单"
+                       to="/order"
+                       exact
+          />
+          <q-route-tab name="articles" label="玩赚"
+                       to="/mails"
+                       exact/>
+          <q-route-tab name="mine" label="我的"
+                       to="/mails"
+                       exact/>
+        </q-tabs>
+      </q-card>
     </q-footer>
   </q-layout>
   <!--  <div>-->
@@ -278,5 +292,13 @@
     border: red 1px solid;
   }
 
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    background: rgb(248, 248, 248);
+    /*width: 100%;*/
+  }
 
 </style>
