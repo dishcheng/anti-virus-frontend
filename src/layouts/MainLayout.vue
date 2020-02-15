@@ -1,8 +1,16 @@
 <template>
-  <q-layout>
+
+  <q-layout >
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer class="bg-white text-primary">
+      <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey" v-model="tab">
+        <q-tab name="index" label="首页"/>
+        <q-tab name="order" label="订单" />
+        <q-tab name="articles" label="Articles" />
+      </q-tabs>
+    </q-footer>
   </q-layout>
   <!--  <div>-->
   <!--    sss-->
@@ -211,7 +219,8 @@
         slide: 'style',
         lorem: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo.',
         visible: false,
-        showSimulatedReturnData: false
+        showSimulatedReturnData: false,
+        tab: 'index'
       }
     },
     components: {

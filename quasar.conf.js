@@ -54,6 +54,7 @@ module.exports = function (ctx) {
         'QCarousel',
         'QCarouselControl',
         'QCarouselSlide',
+        'QFooter'//http://www.quasarchs.com/layout/header-and-footer
       ],
       config: {
         loadingBar: {

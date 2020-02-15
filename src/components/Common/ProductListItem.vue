@@ -4,7 +4,7 @@
       <img src="https://cdn.quasar.dev/img/mountains.jpg" class="itemImg">
     </q-item-section>
     <q-item-section top class="relative-position">
-      <q-item-label>广州长隆水上乐园平日家庭票（2大+1小）</q-item-label>
+      <q-item-label class="title">广州长隆水上乐园平日家庭票（2大+1小）</q-item-label>
       <q-item-label caption>
         <q-badge class="bg-deep-orange-2">
           <span style="color: #FF7A2B">#FF7A2B</span>
@@ -36,6 +36,9 @@
     height: 117px;
   }
 
+  .title{
+    font-size: medium;
+  }
   .itemImg {
     width: 117px;
     height: 102px;

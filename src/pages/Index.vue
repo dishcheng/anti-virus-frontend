@@ -3,7 +3,7 @@
     <banner v-bind:banner-list="bannerList"></banner>
     <navigation v-bind:navigation-list="navigationList"></navigation>
     <div class="productList">
-      <product-list-item v-bind:item='item' v-for="(item,index) in 1000"></product-list-item>
+      <product-list-item v-bind:item='item' v-for="(item,index) in 10"></product-list-item>
     </div>
   </q-page>
 </template>
