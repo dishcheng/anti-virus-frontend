@@ -1,8 +1,12 @@
 <template>
   <q-layout>
-    <q-page-container>
-      <router-view/>
-    </q-page-container>
+    <keep-alive>
+      <q-page-container>
+        <!--        <router-view :key="tab"/>-->
+        <router-view />
+      </q-page-container>
+    </keep-alive>
+
     <q-footer class="bg-white text-primary footer">
       <q-card>
         <q-tabs
@@ -234,6 +238,7 @@
         visible: false,
         showSimulatedReturnData: false,
         tab: 'index',
+        // routerName: ',
         menuItems: [
           {
             'text': '首页',
@@ -297,6 +302,11 @@
     },
     created () {
       // this.loadData()
+    },
+    computed: {
+      routerName () {
+        return this.$route.name
+      }
     }
   }
 </script>
