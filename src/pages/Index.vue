@@ -13,23 +13,23 @@
           align="justify"
           narrow-indicator
         >
-          <q-tab name="mails" label="为你推荐"/>
-          <q-tab name="alarms" label="销量最高"/>
-          <q-tab name="movies" label="即将开抢"/>
+          <q-tab name="recommend" label="为你推荐"/>
+          <q-tab name="sold_best" label="销量最高"/>
+          <q-tab name="later" label="即将开抢"/>
         </q-tabs>
 
         <q-separator/>
 
         <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="mails">
+          <q-tab-panel name="recommend">
             <product-list-item v-bind:item='item' :key="index" v-for="(item,index) in 10"></product-list-item>
           </q-tab-panel>
 
-          <q-tab-panel name="alarms">
+          <q-tab-panel name="sold_best">
             <product-list-item v-bind:item='item' :key="index" v-for="(item,index) in 10"></product-list-item>
           </q-tab-panel>
 
-          <q-tab-panel name="movies">
+          <q-tab-panel name="later">
             <product-list-item v-bind:item='item' :key="index" v-for="(item,index) in 10"></product-list-item>
           </q-tab-panel>
         </q-tab-panels>
@@ -52,7 +52,7 @@
     },
     data () {
       return {
-        tab: 'mails',
+        tab: 'recommend',
         bannerList: [],
         ProductListData: [
           {
