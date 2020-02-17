@@ -13,7 +13,7 @@
           align="justify"
           narrow-indicator
         >
-          <q-tab name="recommend" label="为你推荐"/>
+          <q-tab name="recommend" label="为您推荐"/>
           <q-tab name="sold_best" label="销量最高"/>
           <q-tab name="later" label="即将开抢"/>
         </q-tabs>
