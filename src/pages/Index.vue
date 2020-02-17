@@ -3,7 +3,37 @@
     <banner v-bind:banner-list="bannerList"></banner>
     <navigation v-bind:navigation-list="navigationList"></navigation>
     <div class="productList">
-      <product-list-item v-bind:item='item' v-for="(item,index) in 10"></product-list-item>
+      <q-card>
+        <q-tabs
+          v-model="tab"
+          dense
+          class="text-grey"
+          active-color="black"
+          indicator-color="orange"
+          align="justify"
+          narrow-indicator
+        >
+          <q-tab name="mails" label="为你推荐"/>
+          <q-tab name="alarms" label="销量最高"/>
+          <q-tab name="movies" label="即将开抢"/>
+        </q-tabs>
+
+        <q-separator/>
+
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="mails">
+            <product-list-item v-bind:item='item' :key="index" v-for="(item,index) in 10"></product-list-item>
+          </q-tab-panel>
+
+          <q-tab-panel name="alarms">
+            <product-list-item v-bind:item='item' :key="index" v-for="(item,index) in 10"></product-list-item>
+          </q-tab-panel>
+
+          <q-tab-panel name="movies">
+            <product-list-item v-bind:item='item' :key="index" v-for="(item,index) in 10"></product-list-item>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card>
     </div>
   </q-page>
 </template>
@@ -22,6 +52,7 @@
     },
     data () {
       return {
+        tab: 'mails',
         bannerList: [],
         ProductListData: [
           {

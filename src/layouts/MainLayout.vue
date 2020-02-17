@@ -18,6 +18,7 @@
         >
           <q-route-tab
             v-for="(item,index) in menuItems"
+            :key="index"
             :name="item.bind_name"
             :to="item.to"
             :icon="tab===item.bind_name?item.active_icon:item.icon"
