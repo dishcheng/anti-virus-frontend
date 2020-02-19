@@ -85,6 +85,7 @@
         address_options: ['荆西小区', '荆西村'],
         productList: [
           {
+            'code': 'P0001',
             'name': 'A套餐',
             'single_price': 1,
             'desc': '因项目需要，最近用vue写了个二级联动，刚开始用vue不熟悉，收集了两种方法，这也是我借鉴别人的文章和思路才写出来的，其实没什么区别，可以参考下：\n' +
@@ -93,6 +94,7 @@
             'num': 0,
           },
           {
+            'code': 'P0002',
             'name': 'B套餐',
             'single_price': 2,
             'desc': '因项目需要，最近用vue写了个二级联动，刚开始用vue不熟悉，收集了两种方法，这也是我借鉴别人的文章和思路才写出来的，其实没什么区别，可以参考下：\n' +
@@ -101,6 +103,7 @@
             'num': 0,
           },
           {
+            'code': 'P0003',
             'name': 'C套餐',
             'single_price': 3,
             'desc': '因项目需要，最近用vue写了个二级联动，刚开始用vue不熟悉，收集了两种方法，这也是我借鉴别人的文章和思路才写出来的，其实没什么区别，可以参考下：\n' +
@@ -110,12 +113,14 @@
 
           },
           {
+            'code': 'P0004',
             'name': 'D套餐',
             'single_price': 4,
             'desc': 'xxxxxxxx',
             'num': 0,
           },
           {
+            'code': 'P0005',
             'name': 'E套餐',
             'single_price': 5,
             'desc': 'xxxxxxxx',
@@ -173,9 +178,19 @@
           order_remark: this.order_remark,
           order_products: p
         }
-        this.$axios.post('/ss', order_data)
+        this.$axios.post('/user/order', order_data)
           .then((response) => {
-
+            let res = response.data
+            if (res.status_code === 200) {
+              console.log(res.data)
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: res.message,
+                icon: 'report_problem'
+              })
+            }
           })
           .catch((e) => {
             this.$q.notify({

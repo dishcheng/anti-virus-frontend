@@ -5,7 +5,7 @@ import axios from 'axios'
 // 请注意，如果我们不在这里设置任何配置，我们不需要
 // 一个命名的导出，因为我们可以`import axios from 'axios'`
 const axiosInstance = axios.create({
-  baseURL: 'http://12kaksna912n1k3n1b4223k22k1k2.pek.region.tinali.cn/api/'
+  baseURL: 'http://anti.test/api/'
 })
 Vue.prototype.$axios = axiosInstance
 export default { axiosInstance }
