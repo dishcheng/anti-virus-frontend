@@ -8,8 +8,7 @@
               map-options
               emit-value
               label="请选择供应商"/>
-
-    <q-list>
+    <q-list style="margin-top: 20px">
       <q-item v-for="(item,index) in productList" :key="index">
         <q-item-section>
           <q-item-label>{{item.name}}</q-item-label>
@@ -100,87 +99,87 @@
         order_address_detail: null,
         order_remark: null,
         order_total: 0,
-        address_options: ['荆西小区', '荆西村'],
+        address_options: [],
         productList: [
-          {
-            'code': 'P0001',
-            'name': 'A套餐',
-            'single_price': 20,
-            'desc': '套餐A 20元/份,生姜,大蒜,小葱',
-            'num': 0,
-          },
-          {
-            'code': 'P0002',
-            'name': 'B套餐',
-            'single_price': 25,
-            'desc': '套餐B 25元/份\n' +
-              '莴笋两根,' +
-              '胡萝卜两根,' +
-              '白萝卜一根,' +
-              '红菜苔一把,' +
-              '西蓝花一个,' +
-              '蒜苗一把',
-            'num': 0,
-          },
-          {
-            'code': 'P0003',
-            'name': 'C套餐',
-            'single_price': 30,
-            'desc': '莴笋两根\n' +
-              '菜苔一把（白或红）\n' +
-              '白萝卜一根\n' +
-              '蒜苗一把\n' +
-              '胡萝卜二根\n' +
-              '白花菜一个\n' +
-              '西红柿三个',
-            'num': 0,
-
-          },
-          {
-            'code': 'P0004',
-            'name': 'D套餐',
-            'single_price': 40,
-            'desc': '白菜苔 一把  \n' +
-              '红菜苔一把  \n' +
-              '包菜两个  \n' +
-              ' 莴笋两根\n' +
-              '蒜苗 一把\n' +
-              '白萝卜 两个\n' +
-              '白花菜一个\n' +
-              '西蓝花一个',
-            'num': 0,
-          },
-          {
-            'code': 'P0005',
-            'name': 'E套餐',
-            'single_price': 50,
-            'desc': '套餐E 50元/份\n' +
-              '莴笋两根\n' +
-              '大白菜一个\n' +
-              '蒜苗一把\n' +
-              '西蓝花两个 \n' +
-              '白菜苔两把\n' +
-              '土豆 两斤\n' +
-              '白花菜 两个 \n' +
-              '白萝卜 两个',
-            'num': 0,
-          },
-          {
-            'code': 'P0005',
-            'name': 'F套餐',
-            'single_price': 55,
-            'desc': '套餐F 55元/份\n' +
-              '莴笋 四根  \n' +
-              '青椒一斤\n' +
-              '洋葱 两个 \n' +
-              '土豆 两斤\n' +
-              '蒜苗一把\n' +
-              '红菜苔两把\n' +
-              '大白菜一颗\n' +
-              '白萝卜两个  \n' +
-              '芹菜 一斤',
-            'num': 0,
-          },
+          // {
+          //   'code': 'P0001',
+          //   'name': 'A套餐',
+          //   'single_price': 20,
+          //   'desc': '套餐A 20元/份,生姜,大蒜,小葱',
+          //   'num': 0,
+          // },
+          // {
+          //   'code': 'P0002',
+          //   'name': 'B套餐',
+          //   'single_price': 25,
+          //   'desc': '套餐B 25元/份\n' +
+          //     '莴笋两根,' +
+          //     '胡萝卜两根,' +
+          //     '白萝卜一根,' +
+          //     '红菜苔一把,' +
+          //     '西蓝花一个,' +
+          //     '蒜苗一把',
+          //   'num': 0,
+          // },
+          // {
+          //   'code': 'P0003',
+          //   'name': 'C套餐',
+          //   'single_price': 30,
+          //   'desc': '莴笋两根\n' +
+          //     '菜苔一把（白或红）\n' +
+          //     '白萝卜一根\n' +
+          //     '蒜苗一把\n' +
+          //     '胡萝卜二根\n' +
+          //     '白花菜一个\n' +
+          //     '西红柿三个',
+          //   'num': 0,
+          //
+          // },
+          // {
+          //   'code': 'P0004',
+          //   'name': 'D套餐',
+          //   'single_price': 40,
+          //   'desc': '白菜苔 一把  \n' +
+          //     '红菜苔一把  \n' +
+          //     '包菜两个  \n' +
+          //     ' 莴笋两根\n' +
+          //     '蒜苗 一把\n' +
+          //     '白萝卜 两个\n' +
+          //     '白花菜一个\n' +
+          //     '西蓝花一个',
+          //   'num': 0,
+          // },
+          // {
+          //   'code': 'P0005',
+          //   'name': 'E套餐',
+          //   'single_price': 50,
+          //   'desc': '套餐E 50元/份\n' +
+          //     '莴笋两根\n' +
+          //     '大白菜一个\n' +
+          //     '蒜苗一把\n' +
+          //     '西蓝花两个 \n' +
+          //     '白菜苔两把\n' +
+          //     '土豆 两斤\n' +
+          //     '白花菜 两个 \n' +
+          //     '白萝卜 两个',
+          //   'num': 0,
+          // },
+          // {
+          //   'code': 'P0005',
+          //   'name': 'F套餐',
+          //   'single_price': 55,
+          //   'desc': '套餐F 55元/份\n' +
+          //     '莴笋 四根  \n' +
+          //     '青椒一斤\n' +
+          //     '洋葱 两个 \n' +
+          //     '土豆 两斤\n' +
+          //     '蒜苗一把\n' +
+          //     '红菜苔两把\n' +
+          //     '大白菜一颗\n' +
+          //     '白萝卜两个  \n' +
+          //     '芹菜 一斤',
+          //   'num': 0,
+          // },
         ],
         submitOrderProduct: []
       }
@@ -307,7 +306,19 @@
           .then((response) => {
             let res = response.data
             if (res.status_code === 200) {
-              this.productList = res.data.products
+              let tempProductData = []
+              res.data.products.forEach((item) => {
+                //遍历prodAllPrice这个字段，并累加
+                tempProductData.push(
+                  {
+                    'code': item.code,
+                    'name': item.name,
+                    'single_price': item.single_price,
+                    'desc': item.desc,
+                    'num': 0
+                  })
+              })
+              this.productList = tempProductData
               this.address_options = res.data.address
             } else {
               this.$q.notify({
@@ -334,11 +345,11 @@
       this.loadShopsList()
     },
     watch: {
-      // activeShopCode (newVal, oldVal) {
-      //   if (newVal !== '') {
-      //     this.loadProductsAndAddressList(newVal)
-      //   }
-      // }
+      activeShopCode (newVal, oldVal) {
+        if (newVal !== '') {
+          this.loadProductsAndAddressList()
+        }
+      }
     }
   }
 </script>
