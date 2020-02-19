@@ -20,8 +20,13 @@ const routes = [
     component: () => import('layouts/AdminMainLayOut.vue'),
     children: [
       {
+        path: 'login',
+        component: () => import('pages/Shop/Login.vue'),
+        name: 'adminLogin',
+      },
+      {
         path: '',
-        component: () => import('pages/Admin.vue'),
+        component: () => import('pages/Shop/Admin.vue'),
         name: 'adminIndex',
       },
     ]
