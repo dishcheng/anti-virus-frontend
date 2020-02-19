@@ -73,9 +73,6 @@
         <q-input v-model="order_remark"
                  rounded outlined
                  label="备注(非必填)"/>
-        <p>
-          xxxx公司专用，仅配送以下地区：xxx小区，xx村
-        </p>
         <div style="margin-top: 20px">
           <q-btn :label="'提交订单('+this.order_total+'元)'" class="full-width" type="submit" color="primary"/>
         </div>
@@ -320,6 +317,7 @@
               })
               this.productList = tempProductData
               this.address_options = res.data.address
+              this.order_address = null;
             } else {
               this.$q.notify({
                 color: 'negative',
