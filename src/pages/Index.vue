@@ -1,5 +1,14 @@
 <template>
   <q-page>
+
+    <q-select v-model="activeShopCode"
+              :options="shopList"
+              option-value="shop_code"
+              option-label="shop_name"
+              map-options
+              emit-value
+              label="请选择供应商"/>
+
     <q-list>
       <q-item v-for="(item,index) in productList" :key="index">
         <q-item-section>
@@ -49,8 +58,13 @@
 
         <q-select
           ref="order_address"
+          option-value="address"
+          option-label="address"
+          map-options
+          emit-value
           :rules="[val => !!val || '收货地址必填']"
-          v-model="order_address" :options="address_options" label="收货地址"/>
+          v-model="order_address" :options="address_options" label="收货地址"
+        />
 
         <q-input v-model="order_address_detail"
                  rounded outlined
@@ -78,6 +92,8 @@
       return {
         text: 1,
         dense: false,
+        shopList: [],
+        activeShopCode: '',
         order_name: null,
         order_phone: null,
         order_address: null,
@@ -259,10 +275,70 @@
               icon: 'report_problem'
             })
           })
-      }
+      },
+      loadShopsList () {
+        this.$axios.get('/user/shops')
+          .then((response) => {
+            let res = response.data
+            if (res.status_code === 200) {
+              this.shopList = res.data
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: res.message,
+                icon: 'report_problem'
+              })
+            }
+          })
+          .catch((e) => {
+            this.$q.notify({
+              color: 'negative',
+              position: 'top',
+              message: e.message,
+              icon: 'report_problem'
+            })
+          })
+      },
+      loadProductsAndAddressList () {
+        this.$axios.get('/user/products', {
+          params: { 'shop_code': this.activeShopCode }
+        })
+          .then((response) => {
+            let res = response.data
+            if (res.status_code === 200) {
+              this.productList = res.data.products
+              this.address_options = res.data.address
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: res.message,
+                icon: 'report_problem'
+              })
+            }
+          })
+          .catch((e) => {
+            this.$q.notify({
+              color: 'negative',
+              position: 'top',
+              message: e.message,
+              icon: 'report_problem'
+            })
+          })
+      },
+
     },
     computed: {},
     created () {
+      this.loadShopsList()
+    },
+    watch: {
+      // activeShopCode (newVal, oldVal) {
+      //   if (newVal !== '') {
+      //     this.loadProductsAndAddressList(newVal)
+      //   }
+      // }
     }
   }
 </script>

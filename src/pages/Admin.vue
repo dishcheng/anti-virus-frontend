@@ -65,6 +65,10 @@
             </q-popup-edit>
           </q-td>
 
+          <q-td key="mmm" :props="props">
+            <q-btn color="primary" icon="mail" label="On Left" />
+          </q-td>
+
         </q-tr>
       </template>
     </q-table>
@@ -81,6 +85,7 @@
     { name: 'order_address_detail', label: '详细地址', field: 'order_address_detail' },
     { name: 'order_remark', label: '用户备注', field: 'order_remark' },
     { name: 'created_at', label: '提交时间', field: 'created_at' },
+    { name: 'handle', label: '操作', field: 'handle' },
   ]
   const data = [
     {
