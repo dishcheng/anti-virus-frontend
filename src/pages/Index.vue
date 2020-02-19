@@ -154,6 +154,16 @@
         this.$refs.order_name.validate()
         this.$refs.order_phone.validate()
         this.$refs.order_address.validate()
+        if (
+          this.$refs.order_name.hasError
+          ||
+          this.$refs.order_phone.hasError
+          ||
+          this.$refs.order_address.hasError
+        ) {
+          return
+        }
+
         if (this.order_total <= 0) {
           this.$q.notify({
             color: 'negative',
@@ -190,6 +200,7 @@
                 message: res.message,
                 icon: 'report_problem'
               })
+              return
             }
           })
           .catch((e) => {
