@@ -193,6 +193,15 @@
             let res = response.data
             if (res.status_code === 200) {
               console.log(res.data)
+              this.$router.push({
+                name: 'order_detail',
+                query: {
+                  orderId: res.data.order_id,
+                },
+                params: {
+                  order_total: res.data.order_total,
+                }
+              })
             } else {
               this.$q.notify({
                 color: 'negative',
