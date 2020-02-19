@@ -4,7 +4,7 @@
       <q-item v-for="(item,index) in productList" :key="index">
         <q-item-section>
           <q-item-label>{{item.name}}</q-item-label>
-          <q-item-label caption lines="10" v-for="(item2,index) in 20">
+          <q-item-label caption lines="10">
             {{item.desc}}
           </q-item-label>
         </q-item-section>
@@ -89,37 +89,80 @@
           {
             'code': 'P0001',
             'name': 'A套餐',
-            'single_price': 1,
-            'desc': '这是测试产品',
+            'single_price': 20,
+            'desc': '套餐A 20元/份,生姜,大蒜,小葱',
             'num': 0,
           },
           {
             'code': 'P0002',
             'name': 'B套餐',
-            'single_price': 2,
-            'desc': '这是测试产品',
+            'single_price': 25,
+            'desc': '套餐B 25元/份\n' +
+              '莴笋两根,' +
+              '胡萝卜两根,' +
+              '白萝卜一根,' +
+              '红菜苔一把,' +
+              '西蓝花一个,' +
+              '蒜苗一把',
             'num': 0,
           },
           {
             'code': 'P0003',
             'name': 'C套餐',
-            'single_price': 3,
-            'desc': '这是测试产品',
+            'single_price': 30,
+            'desc': '莴笋两根\n' +
+              '菜苔一把（白或红）\n' +
+              '白萝卜一根\n' +
+              '蒜苗一把\n' +
+              '胡萝卜二根\n' +
+              '白花菜一个\n' +
+              '西红柿三个',
             'num': 0,
 
           },
           {
             'code': 'P0004',
             'name': 'D套餐',
-            'single_price': 4,
-            'desc': '这是测试产品',
+            'single_price': 40,
+            'desc': '白菜苔 一把  \n' +
+              '红菜苔一把  \n' +
+              '包菜两个  \n' +
+              ' 莴笋两根\n' +
+              '蒜苗 一把\n' +
+              '白萝卜 两个\n' +
+              '白花菜一个\n' +
+              '西蓝花一个',
             'num': 0,
           },
           {
             'code': 'P0005',
             'name': 'E套餐',
-            'single_price': 5,
-            'desc': '这是测试产品',
+            'single_price': 50,
+            'desc': '套餐E 50元/份\n' +
+              '莴笋两根\n' +
+              '大白菜一个\n' +
+              '蒜苗一把\n' +
+              '西蓝花两个 \n' +
+              '白菜苔两把\n' +
+              '土豆 两斤\n' +
+              '白花菜 两个 \n' +
+              '白萝卜 两个',
+            'num': 0,
+          },
+          {
+            'code': 'P0005',
+            'name': 'F套餐',
+            'single_price': 55,
+            'desc': '套餐F 55元/份\n' +
+              '莴笋 四根  \n' +
+              '青椒一斤\n' +
+              '洋葱 两个 \n' +
+              '土豆 两斤\n' +
+              '蒜苗一把\n' +
+              '红菜苔两把\n' +
+              '大白菜一颗\n' +
+              '白萝卜两个  \n' +
+              '芹菜 一斤',
             'num': 0,
           },
         ],
