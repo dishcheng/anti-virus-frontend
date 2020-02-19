@@ -4,7 +4,7 @@
       <q-item v-for="(item,index) in productList" :key="index">
         <q-item-section>
           <q-item-label>{{item.name}}</q-item-label>
-          <q-item-label caption lines="10">
+          <q-item-label caption lines="10" v-for="(item2,index) in 20">
             {{item.desc}}
           </q-item-label>
         </q-item-section>
@@ -33,14 +33,16 @@
 
 
       <form @submit.prevent.stop="submitOrder" class="q-gutter-md">
+
+
         <q-input v-model="order_name"
-                 filled
+                 rounded outlined
                  ref="order_name"
 
                  :rules="[val => !!val || '联系人姓名必填']"
                  label="联系人姓名"/>
         <q-input v-model="order_phone"
-                 filled
+                 rounded outlined
                  ref="order_phone"
                  :rules="[val => !!val || '联系人手机号必填']"
                  label="联系人手机号"/>
@@ -51,12 +53,12 @@
           v-model="order_address" :options="address_options" label="收货地址"/>
 
         <q-input v-model="order_address_detail"
-                 filled
+                 rounded outlined
                  hint="如为小区请填写楼栋及门牌号；如为村组请填写门牌号"
                  label="位置补充(非必填)"/>
 
         <q-input v-model="order_remark"
-                 filled
+                 rounded outlined
                  label="备注(非必填)"/>
         <p>
           xxxx公司专用，仅配送以下地区：xxx小区，xx村
@@ -88,27 +90,21 @@
             'code': 'P0001',
             'name': 'A套餐',
             'single_price': 1,
-            'desc': '因项目需要，最近用vue写了个二级联动，刚开始用vue不熟悉，收集了两种方法，这也是我借鉴别人的文章和思路才写出来的，其实没什么区别，可以参考下：\n' +
-              '第一种：\n' +
-              '这是第一种方法的html部分代码：',
+            'desc': '这是测试产品',
             'num': 0,
           },
           {
             'code': 'P0002',
             'name': 'B套餐',
             'single_price': 2,
-            'desc': '因项目需要，最近用vue写了个二级联动，刚开始用vue不熟悉，收集了两种方法，这也是我借鉴别人的文章和思路才写出来的，其实没什么区别，可以参考下：\n' +
-              '第一种：\n' +
-              '这是第一种方法的html部分代码：',
+            'desc': '这是测试产品',
             'num': 0,
           },
           {
             'code': 'P0003',
             'name': 'C套餐',
             'single_price': 3,
-            'desc': '因项目需要，最近用vue写了个二级联动，刚开始用vue不熟悉，收集了两种方法，这也是我借鉴别人的文章和思路才写出来的，其实没什么区别，可以参考下：\n' +
-              '第一种：\n' +
-              '这是第一种方法的html部分代码：',
+            'desc': '这是测试产品',
             'num': 0,
 
           },
@@ -116,14 +112,14 @@
             'code': 'P0004',
             'name': 'D套餐',
             'single_price': 4,
-            'desc': 'xxxxxxxx',
+            'desc': '这是测试产品',
             'num': 0,
           },
           {
             'code': 'P0005',
             'name': 'E套餐',
             'single_price': 5,
-            'desc': 'xxxxxxxx',
+            'desc': '这是测试产品',
             'num': 0,
           },
         ],
