@@ -50,9 +50,14 @@
           :rules="[val => !!val || '收货地址必填']"
           v-model="order_address" :options="address_options" label="收货地址"/>
 
+        <q-input v-model="order_address_detail"
+                 filled
+                 hint="如为小区请填写楼栋及门牌号；如为村组请填写门牌号"
+                 label="位置补充(非必填)"/>
+
         <q-input v-model="order_remark"
                  filled
-                 label="备注"/>
+                 label="备注(非必填)"/>
         <p>
           xxxx公司专用，仅配送以下地区：xxx小区，xx村
         </p>
@@ -74,6 +79,7 @@
         order_name: null,
         order_phone: null,
         order_address: null,
+        order_address_detail: null,
         order_remark: null,
         order_total: 0,
         address_options: ['荆西小区', '荆西村'],
@@ -158,9 +164,16 @@
             p.push(item)
           }
         })
-        console.log(p)
 
-        this.$axios.get('/ss')
+        let order_data = {
+          order_name: this.order_name,
+          order_phone: this.order_phone,
+          order_address: this.order_address,
+          order_address_detail: this.order_address_detail,
+          order_remark: this.order_remark,
+          order_products: p
+        }
+        this.$axios.post('/ss', order_data)
           .then((response) => {
 
           })
