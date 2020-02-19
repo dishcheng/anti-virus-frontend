@@ -80,6 +80,8 @@ module.exports = function (ctx) {
       showProgress: true,
       gzip: false,
       analyze: false,
+      distDir:'anti-virus-front',
+      // distDir:'dist',
       // Options below are automatically set depending on the env, set them if you want to override
       // preloadChunks: false,
       // extractCSS: false,

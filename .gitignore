@@ -1,7 +1,9 @@
 .DS_Store
 .thumbs.db
 node_modules
-
+anti-virus-front
+anti-virus-front*
+spa.zip
 # Quasar core related directories
 .quasar
 /dist
