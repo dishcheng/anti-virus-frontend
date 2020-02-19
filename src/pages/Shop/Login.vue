@@ -39,8 +39,35 @@
           return
         }
 
+        this.$axios.post('/shop/auth/login', {
+          'account': this.account,
+          'password': this.password,
+        })
+          .then((response) => {
+            let res = response.data
+            if (res.status_code === 200) {
 
-
+              this.$router.push({
+                name: 'adminIndex',
+              })
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: res.message,
+                icon: 'report_problem'
+              })
+              return
+            }
+          })
+          .catch((e) => {
+            this.$q.notify({
+              color: 'negative',
+              position: 'top',
+              message: e.message,
+              icon: 'report_problem'
+            })
+          })
       },
     },
   }
