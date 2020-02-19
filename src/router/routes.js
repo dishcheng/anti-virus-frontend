@@ -14,6 +14,17 @@ const routes = [
         name: 'order_detail',
       }
     ]
+  },
+  {
+    path: '/admin',
+    component: () => import('layouts/AdminMainLayOut.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/Admin.vue'),
+        name: 'adminIndex',
+      },
+    ]
   }
 ]
 
