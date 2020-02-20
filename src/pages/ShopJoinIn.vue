@@ -25,18 +25,6 @@
         kefuqrcode: require('../assets/kefuqrcode.jpeg')
       }
     },
-    methods: {},
-    computed: {},
-    created () {
-      this.loadShopsList()
-    },
-    watch: {
-      activeShopCode (newVal, oldVal) {
-        if (newVal !== '') {
-          this.loadProductsAndAddressList()
-        }
-      }
-    }
   }
 </script>
 
