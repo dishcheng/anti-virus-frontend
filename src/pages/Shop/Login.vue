@@ -46,13 +46,17 @@
           .then((res) => {
             // let res = response.data
             if (res.status_code === 200) {
-              this.$q.localStorage.set('shop_token', res.data.access_token);
-              let that=this;
-              setTimeout(function () {
-                that.$router.push({
-                  name: 'adminIndex',
-                })
-              }, 2000)//1秒后执行函数，只执行一次。
+              console.log('setToken:' + res.data.access_token)
+              this.$q.localStorage.set('shop_token', res.data.access_token)
+              // let that=this;
+              this.$router.push({
+                name: 'adminIndex',
+              })
+              // setTimeout(function () {
+              //   that.$router.push({
+              //     name: 'adminIndex',
+              //   })
+              // }, 2000)//1秒后执行函数，只执行一次。
             }
           })
           .catch((e) => {
