@@ -1,10 +1,28 @@
 <template>
-  <q-layout>
-    <keep-alive>
-      <q-page-container>
-        <router-view/>
-      </q-page-container>
-    </keep-alive>
+  <q-layout view="hHh lpR fFf">
+
+    <q-drawer show-if-above v-model="left" side="left" bordered>
+      <q-list bordered separator>
+        <q-item clickable v-ripple to="/admin/" exact>
+          <q-item-section>订单管理</q-item-section>
+        </q-item>
+        <q-item clickable v-ripple to="/admin/product" exact>
+          <q-item-section>
+            产品管理
+          </q-item-section>
+        </q-item>
+        <q-item clickable v-ripple to="/admin/address" exact>
+          <q-item-section>
+            地址管理
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-drawer>
+
+    <q-page-container>
+      <router-view/>
+    </q-page-container>
+
   </q-layout>
 </template>
 
@@ -12,12 +30,22 @@
   export default {
     name: 'AdminMainLayout',
     data () {
-      return {}
+      return {
+        left: true
+      }
     },
     components: {},
-    methods: {},
+    methods: {
+      toOrder () {
+        this.$router.push({
+          'name': 'adminIndex',
+        })
+      },
+      toProduct () {
+        this.$router.push({ 'name': 'adminProduct' })
+      }
+    },
     created () {
-      // this.loadData()
     },
     computed: {}
   }

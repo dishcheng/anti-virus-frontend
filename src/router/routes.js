@@ -34,6 +34,16 @@ const routes = [
         component: () => import('pages/Shop/Admin.vue'),
         name: 'adminIndex',
       },
+      {
+        path: 'product',
+        component: () => import('pages/Shop/Product.vue'),
+        name: 'adminProduct',
+      },
+      {
+        path: 'address',
+        component: () => import('pages/Shop/Address.vue'),
+        name: 'adminAddress',
+      },
     ]
   }
 ]
