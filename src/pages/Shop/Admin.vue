@@ -71,6 +71,16 @@
             </q-popup-edit>
           </q-td>
 
+
+          <q-td>
+            <q-option-group
+              :options="orderStatusOptions"
+              type="radio"
+              v-model="props.row.status"
+              @input="updateOrderStatus(props.row.status,props.row.id)"
+            />
+          </q-td>
+
           <q-td>
             <q-btn color="red" round @click="deleteAction(props.row.id)" label="删除"/>
           </q-td>
@@ -82,15 +92,16 @@
 
 <script>
   const columns = [
-    { name: 'id', align: 'left', label: '订单号码', field: 'id' },
+    { name: 'id', align: 'center', label: '订单号码', field: 'id' },
     { name: 'order_products', align: 'center', label: '订单产品', field: 'order_products' },
     { name: 'order_name', align: 'center', label: '联系人', field: 'order_name' },
-    { name: 'order_phone', label: '联系电话', field: 'order_phone' },
-    { name: 'order_address', label: '地址', field: 'order_address' },
-    { name: 'order_address_detail', label: '详细地址', field: 'order_address_detail' },
-    { name: 'order_remark', label: '用户备注', field: 'order_remark' },
-    { name: 'created_at', label: '提交时间', field: 'created_at' },
-    { name: 'handle', label: '操作', field: 'handle' },
+    { name: 'order_phone', align: 'center', label: '联系电话', field: 'order_phone' },
+    { name: 'order_address', align: 'center', label: '地址', field: 'order_address' },
+    { name: 'order_address_detail', align: 'center', label: '详细地址', field: 'order_address_detail' },
+    { name: 'order_remark', align: 'center', label: '用户备注', field: 'order_remark' },
+    { name: 'created_at', align: 'center', label: '提交时间', field: 'created_at' },
+    { name: 'order_status', align: 'center', label: '状态标记', field: 'order_status' },
+    { name: 'handle', align: 'center', label: '操作', field: 'handle' },
   ]
   const data = [
     // {
@@ -123,6 +134,24 @@
         data,
         columns,
         selected: [],
+        orderStatusOptions: [
+          {
+            'label': '待支付',
+            'value': 'unpay',
+          },
+          {
+            'label': '已支付',
+            'value': 'paid',
+          },
+          {
+            'label': '已发货',
+            'value': 'send',
+          },
+          {
+            'label': '已退款',
+            'value': 'refunded',
+          },
+        ]
       }
     },
     methods: {
@@ -195,9 +224,40 @@
           // console.log('I am triggered on both OK and Cancel')
         })
       },
+      updateOrderStatus (value, order_id) {
+        console.log(value, order_id)
+        this.$axios.put('/shop/order/' + order_id, {
+          'status': value
+        })
+          .then((response) => {
+            let res = response.data
+            if (res.status_code === 200) {
+              this.$q.notify({
+                color: 'primary',
+                position: 'top',
+                message: '修改订单状态成功',
+              })
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: res.message,
+                icon: 'report_problem'
+              })
+            }
+          })
+          .catch((e) => {
+            this.$q.notify({
+              color: 'negative',
+              position: 'top',
+              message: e.message,
+              icon: 'report_problem'
+            })
+          })
+
+      }
     },
     created () {
-      console.log('sss')
       this.loadOrders()
     }
   }
