@@ -6,8 +6,6 @@
       title="订单列表"
       :rows-per-page-options="[]"
       row-key="id"
-      selection="multiple"
-      :selected.sync="selected"
       :loading="tableLoading"
     >
 
@@ -24,13 +22,14 @@
           </template>
         </q-input>
         <q-btn color="primary" @click="loadOrders" label="查询"/>
+        <q-btn color="primary" @click="downloadExcel" label="导出"/>
       </template>
 
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td auto-width>
-            <q-toggle dense v-model="props.selected"/>
-          </q-td>
+          <!--          <q-td auto-width>-->
+          <!--            <q-toggle dense v-model="props.selected"/>-->
+          <!--          </q-td>-->
 
 
           <q-td key="id" :props="props">
@@ -212,6 +211,43 @@
             })
           })
         this.tableLoading = false
+      },
+
+      downloadExcel () {
+        let orderQuery = {}
+        if (this.searchOrderId !== '') {
+          orderQuery.order_id = this.searchOrderId
+          // orderQuery.append({ 'order_id': this.searchOrderId })
+        }
+        if (this.searchOrderPhone !== '') {
+          orderQuery.order_phone = this.searchOrderPhone
+          // orderQuery.append({ 'order_phone': this.searchOrderPhone })
+        }
+        this.$axios.get('/shop/order/downloadExcel', {
+          params: orderQuery
+        })
+          .then((response) => {
+            let res = response.data
+            if (res.status_code === 200) {
+              console.log(res)
+              window.open(res.data.path)
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: res.message,
+                icon: 'report_problem'
+              })
+            }
+          })
+          .catch((e) => {
+            this.$q.notify({
+              color: 'negative',
+              position: 'top',
+              message: e.message,
+              icon: 'report_problem'
+            })
+          })
       },
       deleteAction (orderId) {
         console.log(orderId)
