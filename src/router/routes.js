@@ -12,7 +12,12 @@ const routes = [
         path: 'order_detail',
         component: () => import('pages/OrderDetail.vue'),
         name: 'order_detail',
-      }
+      },
+      {
+        path: 'shopJoinIn',
+        component: () => import('pages/ShopJoinIn.vue'),
+        name: 'shopJoinIn',
+      },
     ]
   },
   {
