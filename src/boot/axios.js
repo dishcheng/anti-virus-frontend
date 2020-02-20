@@ -17,6 +17,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   config => {
+    console.log('shop_token:'+shop_token)
     // do something before request is sent
     if (shop_token) {
       // let each request carry token

@@ -231,22 +231,15 @@
             if (res.status_code === 200) {
               console.log(res)
               window.open(res.data.path)
-            } else {
-              this.$q.notify({
-                color: 'negative',
-                position: 'top',
-                message: res.message,
-                icon: 'report_problem'
-              })
             }
           })
           .catch((e) => {
-            this.$q.notify({
-              color: 'negative',
-              position: 'top',
-              message: e.message,
-              icon: 'report_problem'
-            })
+            // this.$q.notify({
+            //   color: 'negative',
+            //   position: 'top',
+            //   message: e.message,
+            //   icon: 'report_problem'
+            // })
           })
       },
       deleteAction (orderId) {
@@ -268,22 +261,9 @@
                   position: 'top',
                   message: '删除成功',
                 })
-              } else {
-                this.$q.notify({
-                  color: 'negative',
-                  position: 'top',
-                  message: res.message,
-                  icon: 'report_problem'
-                })
               }
             })
             .catch((e) => {
-              this.$q.notify({
-                color: 'negative',
-                position: 'top',
-                message: e.message,
-                icon: 'report_problem'
-              })
             })
 
         }).onOk(() => {
@@ -308,27 +288,15 @@
                 message: '修改订单状态成功',
               })
             } else {
-              this.$q.notify({
-                color: 'negative',
-                position: 'top',
-                message: res.message,
-                icon: 'report_problem'
-              })
             }
           })
           .catch((e) => {
-            this.$q.notify({
-              color: 'negative',
-              position: 'top',
-              message: e.message,
-              icon: 'report_problem'
-            })
           })
 
       }
     },
     created () {
-      this.loadOrders()
+      this.loadOrders();
     }
   }
 </script>
