@@ -160,6 +160,33 @@
         }).onOk(() => {
           // console.log('>>>> OK')
           console.log(orderId)
+          this.$axios.delete('/shop/order/' + orderId)
+            .then((response) => {
+              let res = response.data
+              if (res.status_code === 200) {
+                this.$q.notify({
+                  color: 'primary',
+                  position: 'top',
+                  message: '删除成功',
+                })
+              } else {
+                this.$q.notify({
+                  color: 'negative',
+                  position: 'top',
+                  message: res.message,
+                  icon: 'report_problem'
+                })
+              }
+            })
+            .catch((e) => {
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: e.message,
+                icon: 'report_problem'
+              })
+            })
+
         }).onOk(() => {
           // console.log('>>>> second OK catcher')
         }).onCancel(() => {
@@ -168,10 +195,10 @@
           // console.log('I am triggered on both OK and Cancel')
         })
       },
-      created () {
-        console.log('sss')
-        this.loadOrders()
-      }
+    },
+    created () {
+      console.log('sss')
+      this.loadOrders()
     }
   }
 </script>
