@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import routes from './routes'
 import axios from '../boot/axios'
+import { LocalStorage, SessionStorage } from 'quasar'
 
 Vue.use(VueRouter)
 Vue.use(axios)
@@ -26,6 +27,23 @@ export default function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
+  })
+  const whiteList = ['/admin/login', '/', '/order_detail'] // no redirect whitelist
+  Router.beforeEach(async (to, from, next) => {
+    // console.log(to.path, from.path)
+    // determine whether the user has logged in
+    const hasToken = LocalStorage.getItem('shop_token')
+    if (whiteList.indexOf(to.path) !== -1) {
+      // in the free login whitelist, go directly
+      next()
+    } else {
+      // other pages that do not have permission to access are redirected to the login page.
+      if (!hasToken) {
+        next('/admin/login')
+      } else {
+        next()
+      }
+    }
   })
 
   return Router

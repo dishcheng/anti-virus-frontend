@@ -92,9 +92,9 @@
       loadData () {
         let that = this
         this.$axios.get('/customer/module/index/banner')
-          .then((response) => {
-            console.log(response.data.data)
-            that.bannerList = response.data.data
+          .then((res) => {
+            // console.log(response.data.data)
+            that.bannerList = res.data
           })
           .catch(() => {
             that.$q.notify({

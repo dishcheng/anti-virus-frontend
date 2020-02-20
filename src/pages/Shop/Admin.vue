@@ -189,8 +189,8 @@
         this.$axios.get('/shop/order', {
           params: orderQuery
         })
-          .then((response) => {
-            let res = response.data
+          .then((res) => {
+            // let res = response.data
             if (res.status_code === 200) {
               this.data = res.data
             } else {
@@ -226,8 +226,8 @@
         this.$axios.get('/shop/order/downloadExcel', {
           params: orderQuery
         })
-          .then((response) => {
-            let res = response.data
+          .then((res) => {
+            // let res = response.data
             if (res.status_code === 200) {
               console.log(res)
               window.open(res.data.path)
@@ -260,8 +260,8 @@
           // console.log('>>>> OK')
           console.log(orderId)
           this.$axios.delete('/shop/order/' + orderId)
-            .then((response) => {
-              let res = response.data
+            .then((res) => {
+              // let res = response.data
               if (res.status_code === 200) {
                 this.$q.notify({
                   color: 'primary',
@@ -299,8 +299,8 @@
         this.$axios.put('/shop/order/' + order_id, {
           'status': value
         })
-          .then((response) => {
-            let res = response.data
+          .then((res) => {
+            // let res = response.data
             if (res.status_code === 200) {
               this.$q.notify({
                 color: 'primary',

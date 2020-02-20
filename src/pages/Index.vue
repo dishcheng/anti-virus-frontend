@@ -240,8 +240,7 @@
           order_products: p
         }
         this.$axios.post('/user/order', order_data)
-          .then((response) => {
-            let res = response.data
+          .then((res) => {
             if (res.status_code === 200) {
               console.log(res.data)
               this.$router.push({
@@ -253,29 +252,14 @@
                   order_total: res.data.order_total,
                 }
               })
-            } else {
-              this.$q.notify({
-                color: 'negative',
-                position: 'top',
-                message: res.message,
-                icon: 'report_problem'
-              })
-              return
             }
           })
           .catch((e) => {
-            this.$q.notify({
-              color: 'negative',
-              position: 'top',
-              message: e.message,
-              icon: 'report_problem'
-            })
           })
       },
       loadShopsList () {
         this.$axios.get('/user/shops')
-          .then((response) => {
-            let res = response.data
+          .then((res) => {
             if (res.status_code === 200) {
               this.shopList = res.data
             } else {
@@ -300,8 +284,8 @@
         this.$axios.get('/user/products', {
           params: { 'shop_code': this.activeShopCode }
         })
-          .then((response) => {
-            let res = response.data
+          .then((res) => {
+            // let res = response.data
             if (res.status_code === 200) {
               let tempProductData = []
               res.data.products.forEach((item) => {
@@ -317,7 +301,7 @@
               })
               this.productList = tempProductData
               this.address_options = res.data.address
-              this.order_address = null;
+              this.order_address = null
             } else {
               this.$q.notify({
                 color: 'negative',

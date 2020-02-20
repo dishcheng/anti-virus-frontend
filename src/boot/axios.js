@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import { LocalStorage, SessionStorage } from 'quasar'
+import { Notify } from 'quasar'
 
 let shop_token = LocalStorage.getItem('shop_token')
 
@@ -32,5 +33,61 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
+// response interceptor
+axiosInstance.interceptors.response.use(
+  /**
+   * If you want to get http information such as headers or status
+   * Please return  response => response
+   */
+
+  /**
+   * Determine the request status by custom code
+   * Here is just an example
+   * You can also judge the status by HTTP Status Code
+   */
+  response => {
+    const res = response.data
+    // if the custom code is not 20000, it is judged as an error.
+    if (res.status_code !== 200) {
+      Notify.create({
+        color: 'negative',
+        position: 'top',
+        message: res.message,
+        icon: 'report_problem'
+      })
+      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      // if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      //   // to re-login
+      //   MessageBox.confirm('你已经登出，你可以点击取消保持在当前页面，或者重新登录', '验证过期', {
+      //     confirmButtonText: '重新登录',
+      //     cancelButtonText: '取消',
+      //     type: 'warning'
+      //   }).then(() => {
+      //     store.dispatch('user/resetToken').then(() => {
+      //       location.reload()
+      //     })
+      //   })
+      // }
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return res
+    }
+  },
+  error => {
+    console.log('axiosError' + error) // for debug
+    if (error.response.status === 401) {
+      LocalStorage.remove('shop_token')
+      Notify.create({
+        color: 'negative',
+        position: 'top',
+        message: '请重新登录',
+        icon: 'report_problem'
+      })
+    }
+    return Promise.reject(error)
+  }
+)
+
 Vue.prototype.$axios = axiosInstance
 export default { axiosInstance }

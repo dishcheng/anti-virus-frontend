@@ -43,30 +43,16 @@
           'account': this.account,
           'password': this.password,
         })
-          .then((response) => {
-            let res = response.data
+          .then((res) => {
+            // let res = response.data
             if (res.status_code === 200) {
               this.$q.localStorage.set('shop_token', res.data.access_token)
               this.$router.push({
                 name: 'adminIndex',
               })
-            } else {
-              this.$q.notify({
-                color: 'negative',
-                position: 'top',
-                message: res.message,
-                icon: 'report_problem'
-              })
-              return
             }
           })
           .catch((e) => {
-            this.$q.notify({
-              color: 'negative',
-              position: 'top',
-              message: e.message,
-              icon: 'report_problem'
-            })
           })
       },
     },
