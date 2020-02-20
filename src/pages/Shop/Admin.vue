@@ -8,12 +8,30 @@
       row-key="id"
       selection="multiple"
       :selected.sync="selected"
+      :loading="tableLoading"
     >
+
+      <template v-slot:top>
+        <q-space/>
+        <q-input dense debounce="300" hint="检索订单编号" color="primary" v-model="searchOrderId">
+          <template v-slot:append>
+            <q-icon name="search"/>
+          </template>
+        </q-input>
+        <q-input dense debounce="300" hint="检索用户手机号" color="primary" v-model="searchOrderPhone">
+          <template v-slot:append>
+            <q-icon name="search"/>
+          </template>
+        </q-input>
+        <q-btn color="primary" @click="loadOrders" label="查询"/>
+      </template>
+
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td auto-width>
             <q-toggle dense v-model="props.selected"/>
           </q-td>
+
 
           <q-td key="id" :props="props">
             {{ props.row.id }}
@@ -21,43 +39,43 @@
 
           <q-td key="order_products" :props="props">
             <div v-for="(item2,index) in props.row.order_products">
-              {{item2.name}}---数量：{{item2.num}}
+              {{item2.name}}---产品单价:{{item2.single_price}}---下单数量：{{item2.num}}
             </div>
           </q-td>
 
           <q-td key="order_name" :props="props">
             {{ props.row.order_name }}
-            <q-popup-edit v-model="props.row.order_name">
-              <q-input v-model.number="props.row.order_name" dense/>
-            </q-popup-edit>
+            <!--            <q-popup-edit v-model="props.row.order_name">-->
+            <!--              <q-input v-model.number="props.row.order_name" dense/>-->
+            <!--            </q-popup-edit>-->
           </q-td>
 
           <q-td key="order_phone" :props="props">
             {{ props.row.order_phone }}
-            <q-popup-edit v-model.number="props.row.order_phone">
-              <q-input type="number" v-model.number="props.row.order_phone" dense/>
-            </q-popup-edit>
+            <!--            <q-popup-edit v-model.number="props.row.order_phone">-->
+            <!--              <q-input type="number" v-model.number="props.row.order_phone" dense/>-->
+            <!--            </q-popup-edit>-->
           </q-td>
 
           <q-td key="order_address" :props="props">
             {{ props.row.order_address }}
-            <q-popup-edit v-model="props.row.order_address">
-              <q-input v-model="props.row.order_address" dense/>
-            </q-popup-edit>
+            <!--            <q-popup-edit v-model="props.row.order_address">-->
+            <!--              <q-input v-model="props.row.order_address" dense/>-->
+            <!--            </q-popup-edit>-->
           </q-td>
 
           <q-td key="order_address_detail" :props="props">
             {{ props.row.order_address_detail }}
-            <q-popup-edit v-model="props.row.order_address_detail">
-              <q-input v-model="props.row.order_address_detail" dense/>
-            </q-popup-edit>
+            <!--            <q-popup-edit v-model="props.row.order_address_detail">-->
+            <!--              <q-input v-model="props.row.order_address_detail" dense/>-->
+            <!--            </q-popup-edit>-->
           </q-td>
 
           <q-td key="order_remark" :props="props">
             {{ props.row.order_remark }}
-            <q-popup-edit v-model="props.row.order_remark">
-              <q-input v-model="props.row.order_remark" dense/>
-            </q-popup-edit>
+            <!--            <q-popup-edit v-model="props.row.order_remark">-->
+            <!--              <q-input v-model="props.row.order_remark" dense/>-->
+            <!--            </q-popup-edit>-->
           </q-td>
 
           <q-td key="created_at" :props="props">
@@ -66,9 +84,9 @@
 
           <q-td key="order_total" :props="props">
             {{ props.row.order_total }}
-            <q-popup-edit v-model="props.row.order_total">
-              <q-input v-model="props.row.order_total" dense autofocus/>
-            </q-popup-edit>
+            <!--            <q-popup-edit v-model="props.row.order_total">-->
+            <!--              <q-input v-model="props.row.order_total" dense autofocus/>-->
+            <!--            </q-popup-edit>-->
           </q-td>
 
 
@@ -133,7 +151,10 @@
       return {
         data,
         columns,
+        tableLoading: true,
         selected: [],
+        searchOrderId: '',
+        searchOrderPhone: '',
         orderStatusOptions: [
           {
             'label': '待支付',
@@ -156,7 +177,19 @@
     },
     methods: {
       loadOrders () {
-        this.$axios.get('/shop/order', {})
+        this.tableLoading = false
+        let orderQuery = {}
+        if (this.searchOrderId !== '') {
+          orderQuery.order_id = this.searchOrderId
+          // orderQuery.append({ 'order_id': this.searchOrderId })
+        }
+        if (this.searchOrderPhone !== '') {
+          orderQuery.order_phone = this.searchOrderPhone
+          // orderQuery.append({ 'order_phone': this.searchOrderPhone })
+        }
+        this.$axios.get('/shop/order', {
+          params: orderQuery
+        })
           .then((response) => {
             let res = response.data
             if (res.status_code === 200) {
@@ -178,6 +211,7 @@
               icon: 'report_problem'
             })
           })
+        this.tableLoading = false
       },
       deleteAction (orderId) {
         console.log(orderId)
