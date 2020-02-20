@@ -58,7 +58,10 @@ module.exports = function (ctx) {
         'QTabPanels',
         'QTabPanel',
         'QRouteTab',
-        'QIcon'
+        'QIcon',
+        'LocalStorage',
+        'SessionStorage',
+        'Dialog'
       ],
       config: {
         loadingBar: {

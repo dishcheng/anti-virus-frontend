@@ -46,7 +46,7 @@
           .then((response) => {
             let res = response.data
             if (res.status_code === 200) {
-
+              this.$q.localStorage.set('shop_token', res.data.access_token)
               this.$router.push({
                 name: 'adminIndex',
               })

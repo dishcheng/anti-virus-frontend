@@ -5,10 +5,16 @@
       :columns="columns"
       title="订单列表"
       :rows-per-page-options="[]"
-      row-key="name"
+      row-key="id"
+      selection="multiple"
+      :selected.sync="selected"
     >
       <template v-slot:body="props">
         <q-tr :props="props">
+          <q-td auto-width>
+            <q-toggle dense v-model="props.selected"/>
+          </q-td>
+
           <q-td key="id" :props="props">
             {{ props.row.id }}
           </q-td>
@@ -65,10 +71,9 @@
             </q-popup-edit>
           </q-td>
 
-          <q-td key="mmm" :props="props">
-            <q-btn color="primary" icon="mail" label="On Left" />
+          <q-td>
+            <q-btn color="red" round @click="deleteAction(props.row.id)" label="删除"/>
           </q-td>
-
         </q-tr>
       </template>
     </q-table>
@@ -88,41 +93,85 @@
     { name: 'handle', label: '操作', field: 'handle' },
   ]
   const data = [
-    {
-      id: 'id',
-      order_name: '姓名',
-      order_phone: '电话',
-      order_address: '地址',
-      order_address_detail: '详细地址',
-      order_total: '1999.00',
-      created_at: '订单提交时间',
-      order_remark: '备注',
-      order_products: [
-        {
-          'code': 'sss',
-          'name': 'A陶产',
-          'num': '1',
-        },
-        {
-          'code': 'sss',
-          'name': 'sssss',
-          'num': '111',
-        },
-
-      ]
-    },
+    // {
+    //   id: 'id',
+    //   order_name: '姓名',
+    //   order_phone: '电话',
+    //   order_address: '地址',
+    //   order_address_detail: '详细地址',
+    //   order_total: '1999.00',
+    //   created_at: '订单提交时间',
+    //   order_remark: '备注',
+    //   order_products: [
+    //     {
+    //       'code': 'sss',
+    //       'name': 'A陶产',
+    //       'num': '1',
+    //     },
+    //     {
+    //       'code': 'sss',
+    //       'name': 'sssss',
+    //       'num': '111',
+    //     },
+    //   ]
+    // },
   ]
 
   export default {
     data () {
       return {
         data,
-        columns
+        columns,
+        selected: [],
       }
     },
-    methods: {},
-    created () {
-
+    methods: {
+      loadOrders () {
+        this.$axios.get('/shop/order', {})
+          .then((response) => {
+            let res = response.data
+            if (res.status_code === 200) {
+              this.data = res.data
+            } else {
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: res.message,
+                icon: 'report_problem'
+              })
+            }
+          })
+          .catch((e) => {
+            this.$q.notify({
+              color: 'negative',
+              position: 'top',
+              message: e.message,
+              icon: 'report_problem'
+            })
+          })
+      },
+      deleteAction (orderId) {
+        console.log(orderId)
+        this.$q.dialog({
+          title: '确认删除' + orderId + '?',
+          message: '',
+          cancel: true,
+          persistent: true
+        }).onOk(() => {
+          // console.log('>>>> OK')
+          console.log(orderId)
+        }).onOk(() => {
+          // console.log('>>>> second OK catcher')
+        }).onCancel(() => {
+          // console.log('>>>> Cancel')
+        }).onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        })
+      },
+      created () {
+        console.log('sss')
+        this.loadOrders()
+      }
     }
   }
 </script>
