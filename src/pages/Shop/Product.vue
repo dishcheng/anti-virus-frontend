@@ -26,7 +26,7 @@
           </q-td>
 
           <q-td key="desc" :props="props">
-            {{ props.row.desc }}
+              {{ props.row.desc }}
             <q-popup-edit v-model="props.row.desc" buttons title="编辑描述"
                           @save="changeDesc(props.row.code,props.row.desc)"
             >
