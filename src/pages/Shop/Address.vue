@@ -9,9 +9,9 @@
       :loading="tableLoading"
     >
       <template v-slot:top>
-        <q-btn color="primary" @click="!showCreateFrom" label="创建"/>
+        <q-btn color="primary" @click="toggleCreateFrom" label="创建"/>
       </template>
-      
+
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="id" :props="props">
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+  import CreateAddressForm from '../../components/Shop/CreateAddressForm'
+
   const columns = [
     { name: 'id', align: 'center', label: 'id', field: 'id' },
     { name: 'address', align: 'center', label: '配送地址', field: 'address' },
@@ -60,7 +62,33 @@
       },
       deleteAction (id) {
 
-      }
+      },
+      toggleCreateFrom () {
+        this.$q.dialog({
+          component: CreateAddressForm,
+          parent: this, // 成为该Vue节点的子元素
+        }).onOk((data) => {
+          //创建地址
+          this.$axios.post('/shop/address', data)
+            .then((res) => {
+              if (res.status_code === 200) {
+                this.$q.notify({
+                  color: 'primary',
+                  position: 'top',
+                  message: '创建成功',
+                })
+              }
+            })
+            .catch((e) => {
+            })
+          console.log('OK', data)
+        }).onCancel(() => {
+          console.log('Cancel')
+        }).onDismiss(() => {
+          console.log('Called on OK or Cancel')
+        })
+      },
+
     },
     created () {
       this.loadData()
