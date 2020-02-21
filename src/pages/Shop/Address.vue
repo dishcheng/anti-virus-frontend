@@ -19,6 +19,10 @@
           </q-td>
           <q-td key="address" :props="props">
             {{ props.row.address }}
+            <q-popup-edit v-model="props.row.address" buttons title="编辑地址"
+                          @save="changeAddress(props.row.id,props.row.address)">
+              <q-input v-model="props.row.address" dense autofocus counter/>
+            </q-popup-edit>
           </q-td>
 
           <q-td key="is_public" :props="props">
@@ -28,7 +32,6 @@
               left-label
               @input="changePublicStatus(props.row.id,props.row.is_public)"
             />
-
           </q-td>
 
 
@@ -140,7 +143,23 @@
           })
           .catch((e) => {
           })
-      }
+      },
+      changeAddress (id, status) {
+        this.$axios.put('/shop/address/' + id, {
+          address: status
+        })
+          .then((res) => {
+            if (res.status_code === 200) {
+              this.$q.notify({
+                color: 'primary',
+                position: 'top',
+                message: '修改成功',
+              })
+            }
+          })
+          .catch((e) => {
+          })
+      },
 
     },
     created () {
