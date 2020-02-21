@@ -20,8 +20,20 @@
           <q-td key="address" :props="props">
             {{ props.row.address }}
           </q-td>
+
+          <q-td key="is_public" :props="props">
+            <q-toggle
+              v-model="props.row.is_public"
+              color="green"
+              left-label
+              @input="changePublicStatus(props.row.id,props.row.is_public)"
+            />
+
+          </q-td>
+
+
           <q-td>
-            <q-btn color="red" round @click="deleteAction(props.row.id)" label="删除"/>
+            <q-btn color="red" round @click="deleteAction(props.row.id,props.row.address)" label="删除"/>
           </q-td>
         </q-tr>
       </template>
@@ -35,6 +47,7 @@
   const columns = [
     { name: 'id', align: 'center', label: 'id', field: 'id' },
     { name: 'address', align: 'center', label: '配送地址', field: 'address' },
+    { name: 'is_public', align: 'center', label: '是否开启', field: 'is_public' },
     { name: 'handle', align: 'center', label: '操作', field: 'handle' },
   ]
   const data = []
@@ -60,8 +73,32 @@
           })
         this.tableLoading = false
       },
-      deleteAction (id) {
-
+      deleteAction (id, name) {
+        this.$q.dialog({
+          title: '确认删除' + name + '?',
+          message: '',
+          cancel: true,
+          persistent: true
+        }).onOk(() => {
+          this.$axios.delete('/shop/address/' + id)
+            .then((res) => {
+              if (res.status_code === 200) {
+                this.$q.notify({
+                  color: 'primary',
+                  position: 'top',
+                  message: '删除成功',
+                })
+              }
+            })
+            .catch((e) => {
+            })
+        }).onOk(() => {
+          // console.log('>>>> second OK catcher')
+        }).onCancel(() => {
+          // console.log('>>>> Cancel')
+        }).onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        })
       },
       toggleCreateFrom () {
         this.$q.dialog({
@@ -88,6 +125,22 @@
           console.log('Called on OK or Cancel')
         })
       },
+      changePublicStatus (id, status) {
+        this.$axios.put('/shop/address/' + id, {
+          is_public: status
+        })
+          .then((res) => {
+            if (res.status_code === 200) {
+              this.$q.notify({
+                color: 'primary',
+                position: 'top',
+                message: '修改成功',
+              })
+            }
+          })
+          .catch((e) => {
+          })
+      }
 
     },
     created () {
