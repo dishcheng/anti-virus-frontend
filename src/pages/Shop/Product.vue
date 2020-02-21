@@ -19,9 +19,33 @@
           </q-td>
           <q-td key="name" :props="props">
             {{ props.row.name }}
+            <q-popup-edit v-model="props.row.name" buttons title="编辑标题"
+                          @save="changeName(props.row.code,props.row.name)">
+              <q-input v-model="props.row.name" dense autofocus counter/>
+            </q-popup-edit>
           </q-td>
+
+          <q-td key="desc" :props="props">
+            {{ props.row.desc }}
+            <q-popup-edit v-model="props.row.desc" buttons title="编辑描述"
+                          @save="changeDesc(props.row.code,props.row.desc)"
+            >
+              <q-input
+                type="textarea"
+                v-model="props.row.desc" dense autofocus counter
+              />
+            </q-popup-edit>
+          </q-td>
+
           <q-td key="single_price" :props="props">
-            {{ props.row.single_price }}元
+            {{ props.row.single_price }}
+            <q-popup-edit v-model="props.row.single_price" buttons title="编辑价格"
+                          @save="changeSinglePrice(props.row.code,props.row.single_price)">
+              <q-input
+                type="number"
+                v-model.number="props.row.single_price" dense autofocus counter/>
+            </q-popup-edit>
+            元
           </q-td>
 
           <q-td key="is_public" :props="props">
@@ -48,6 +72,7 @@
   const columns = [
     { name: 'code', align: 'center', label: '产品编号', field: 'code' },
     { name: 'name', align: 'center', label: '名称', field: 'name' },
+    { name: 'desc', align: 'center', label: '描述', field: 'desc' },
     { name: 'single_price', align: 'center', label: '单价', field: 'single_price' },
     { name: 'is_public', align: 'center', label: '是否展示', field: 'is_public' },
     { name: 'handle', align: 'center', label: '操作', field: 'handle' },
@@ -74,8 +99,8 @@
           })
         this.tableLoading = false
       },
-      deleteAction (code,name) {
-        console.log(code,name)
+      deleteAction (code, name) {
+        console.log(code, name)
         this.$q.dialog({
           title: '确认删除' + name + '?',
           message: '',
@@ -106,22 +131,7 @@
       toggleCreateFrom () {
         this.$q.dialog({
           component: CreateProductForm,
-          // 如果要访问自定义组件中的
-          // 路由管理器、Vuex存储等,
-          // 则为可选：
           parent: this, // 成为该Vue节点的子元素
-                        // （“this”指向您的Vue组件）
-                        // （此属性在<1.1.0中称为“root”
-                        //  仍然可以使用，但建议切换到
-                        //  更合适的“parent”名称）
-
-          // 传递给组件的属性
-          // （上述“component”和“parent”属性除外）：
-          // product_name: this.product_name,
-          // desc: this.desc,
-          // single_price: this.single_price,
-          // is_public: this.is_public,
-          // ...更多属性...
         }).onOk((data) => {
           //创建产品
           this.$axios.post('/shop/product', data)
@@ -159,7 +169,62 @@
           })
           .catch((e) => {
           })
-      }
+      },
+      changeName (code, name) {
+        console.log(name)
+        //修改产品名称
+        this.$axios.put('/shop/product/' + code, {
+          name: name
+        })
+          .then((res) => {
+            if (res.status_code === 200) {
+              this.$q.notify({
+                color: 'primary',
+                position: 'top',
+                message: '修改成功',
+              })
+            }
+          })
+          .catch((e) => {
+          })
+      },
+      changeSinglePrice (code, price) {
+        console.log(code, price)
+        //修改产品价格
+        this.$axios.put('/shop/product/' + code, {
+          single_price: price
+        })
+          .then((res) => {
+            if (res.status_code === 200) {
+              this.$q.notify({
+                color: 'primary',
+                position: 'top',
+                message: '修改成功',
+              })
+            }
+          })
+          .catch((e) => {
+          })
+      },
+      changeDesc (code, desc) {
+        console.log(code, desc)
+        //修改产品描述
+        this.$axios.put('/shop/product/' + code, {
+          desc: desc
+        })
+          .then((res) => {
+            if (res.status_code === 200) {
+              this.$q.notify({
+                color: 'primary',
+                position: 'top',
+                message: '修改成功',
+              })
+            }
+          })
+          .catch((e) => {
+          })
+      },
+
     },
     created () {
       this.loadData()

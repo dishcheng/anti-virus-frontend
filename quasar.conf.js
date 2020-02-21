@@ -61,7 +61,8 @@ module.exports = function (ctx) {
         'QIcon',
         'LocalStorage',
         'SessionStorage',
-        'Dialog'
+        'Dialog',
+        'QPopupEdit'
       ],
       config: {
         loadingBar: {
