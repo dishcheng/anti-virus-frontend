@@ -2,8 +2,8 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-black">
       <q-toolbar>
-        <q-btn flat @click="left = !left" round dense icon="menu" />
-        <q-toolbar-title>后台管理</q-toolbar-title>
+        <q-btn flat @click="left = !left" round dense icon="menu"/>
+        <q-toolbar-title>后台管理-{{shop_info.shop_name}}</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -48,7 +48,8 @@
     name: 'AdminMainLayout',
     data () {
       return {
-        left: true
+        left: true,
+        shop_info: '',
       }
     },
     components: {},
@@ -63,6 +64,7 @@
       }
     },
     created () {
+      this.shop_info = this.$q.localStorage.getItem('shop_info')||''
     },
     computed: {}
   }

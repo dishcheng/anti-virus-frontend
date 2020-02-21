@@ -49,6 +49,7 @@
             if (res.status_code === 200) {
               console.log('setToken:' + res.data.access_token)
               this.$q.localStorage.set('shop_token', res.data.access_token)
+              this.$q.localStorage.set('shop_info', res.data.shop_info)
               // let that=this;
               this.$router.push({
                 name: 'adminIndex',
