@@ -8,6 +8,7 @@
           v-model="account" label="账号"/>
         <q-input
           ref="password"
+          type="password"
           :rules="[val => !!val || '密码必填']"
           v-model="password" label="密码"/>
         <div style="margin-top: 20px">

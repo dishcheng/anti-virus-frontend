@@ -8,6 +8,10 @@
       row-key="id"
       :loading="tableLoading"
     >
+      <template v-slot:top>
+        <q-btn color="primary" @click="!showCreateFrom" label="创建"/>
+      </template>
+      
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="id" :props="props">
@@ -38,6 +42,7 @@
         data,
         columns,
         tableLoading: true,
+        showCreateFrom: false,
       }
     },
     methods: {

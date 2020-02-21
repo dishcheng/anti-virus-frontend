@@ -21,14 +21,14 @@ const routes = [
     ]
   },
   {
+    path: '/admin/login',
+    component: () => import('pages/Shop/Login.vue'),
+    name: 'adminLogin',
+  },
+  {
     path: '/admin',
     component: () => import('layouts/AdminMainLayOut.vue'),
     children: [
-      {
-        path: 'login',
-        component: () => import('pages/Shop/Login.vue'),
-        name: 'adminLogin',
-      },
       {
         path: '',
         component: () => import('pages/Shop/Admin.vue'),

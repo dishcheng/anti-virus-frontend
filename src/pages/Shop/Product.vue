@@ -8,6 +8,10 @@
       row-key="code"
       :loading="tableLoading"
     >
+      <template v-slot:top>
+        <q-btn color="primary" @click="toggleCreateFrom" label="创建"/>
+      </template>
+
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="code" :props="props">
@@ -17,7 +21,17 @@
             {{ props.row.name }}
           </q-td>
           <q-td key="single_price" :props="props">
-            {{ props.row.single_price }}元/1份
+            {{ props.row.single_price }}元
+          </q-td>
+
+          <q-td key="is_public" :props="props">
+            <q-toggle
+              v-model="props.row.is_public"
+              color="green"
+              label="是否展示"
+              left-label
+            />
+
           </q-td>
           <q-td>
             <q-btn color="red" round @click="deleteAction(props.row.id)" label="删除"/>
@@ -29,10 +43,13 @@
 </template>
 
 <script>
+  import CreateProductForm from '../../components/Shop/CreateProductForm'
+
   const columns = [
-    { name: 'code', align: 'center', label: 'id', field: 'code' },
+    { name: 'code', align: 'center', label: '产品编号', field: 'code' },
     { name: 'name', align: 'center', label: '名称', field: 'name' },
     { name: 'single_price', align: 'center', label: '单价', field: 'single_price' },
+    { name: 'is_public', align: 'center', label: '单价', field: 'is_public' },
     { name: 'handle', align: 'center', label: '操作', field: 'handle' },
   ]
   const data = []
@@ -59,6 +76,45 @@
       },
       deleteAction (id) {
 
+      },
+      toggleCreateFrom () {
+        this.$q.dialog({
+          component: CreateProductForm,
+          // 如果要访问自定义组件中的
+          // 路由管理器、Vuex存储等,
+          // 则为可选：
+          parent: this, // 成为该Vue节点的子元素
+                        // （“this”指向您的Vue组件）
+                        // （此属性在<1.1.0中称为“root”
+                        //  仍然可以使用，但建议切换到
+                        //  更合适的“parent”名称）
+
+          // 传递给组件的属性
+          // （上述“component”和“parent”属性除外）：
+          // product_name: this.product_name,
+          // desc: this.desc,
+          // single_price: this.single_price,
+          // is_public: this.is_public,
+          // ...更多属性...
+        }).onOk((data) => {
+          this.$axios.post('/shop/product', data)
+            .then((res) => {
+              if (res.status_code === 200) {
+                this.$q.notify({
+                  color: 'primary',
+                  position: 'top',
+                  message: '创建成功',
+                })
+              }
+            })
+            .catch((e) => {
+            })
+          console.log('OK', data)
+        }).onCancel(() => {
+          console.log('Cancel')
+        }).onDismiss(() => {
+          console.log('Called on OK or Cancel')
+        })
       }
     },
     created () {
