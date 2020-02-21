@@ -11,18 +11,32 @@
 
       <template v-slot:top>
         <q-space/>
-        <q-input dense debounce="300" hint="检索订单编号" color="primary" v-model="searchOrderId">
-          <template v-slot:append>
-            <q-icon name="search"/>
-          </template>
+        <q-input clearable dense debounce="300" hint="检索订单编号" color="primary" v-model="searchOrderId">
+<!--          <template v-slot:append>-->
+<!--            <q-icon name="search"/>-->
+<!--          </template>-->
         </q-input>
-        <q-input dense debounce="300" hint="检索用户手机号" color="primary" v-model="searchOrderPhone">
-          <template v-slot:append>
-            <q-icon name="search"/>
-          </template>
+        <q-input clearable style="margin-left: 10px" dense debounce="300" hint="检索用户手机号" color="primary" v-model="searchOrderPhone">
+<!--          <template v-slot:append>-->
+<!--            <q-icon name="search"/>-->
+<!--          </template>-->
         </q-input>
+
+        <q-select
+          filled
+          clearable
+          v-model="searchOrderStatus"
+          :options="orderStatusOptions"
+          option-disable="inactive"
+          emit-value
+          map-options
+          label="检索订单状态"
+          style="min-width: 250px; max-width: 300px"
+        />
+
         <q-btn color="primary" @click="loadOrders" label="查询"/>
-        <q-btn color="primary" @click="downloadExcel" label="导出"/>
+
+        <q-btn style="margin-left: 2px" color="primary" @click="downloadExcel" label="导出"/>
       </template>
 
       <template v-slot:body="props">
@@ -152,6 +166,7 @@
         selected: [],
         searchOrderId: '',
         searchOrderPhone: '',
+        searchOrderStatus: '',
         orderStatusOptions: [
           {
             'label': '待支付',
@@ -178,11 +193,12 @@
         let orderQuery = {}
         if (this.searchOrderId !== '') {
           orderQuery.order_id = this.searchOrderId
-          // orderQuery.append({ 'order_id': this.searchOrderId })
         }
         if (this.searchOrderPhone !== '') {
           orderQuery.order_phone = this.searchOrderPhone
-          // orderQuery.append({ 'order_phone': this.searchOrderPhone })
+        }
+        if (this.searchOrderStatus !== '') {
+          orderQuery.status = this.searchOrderStatus
         }
         this.$axios.get('/shop/order', {
           params: orderQuery
@@ -215,11 +231,12 @@
         let orderQuery = {}
         if (this.searchOrderId !== '') {
           orderQuery.order_id = this.searchOrderId
-          // orderQuery.append({ 'order_id': this.searchOrderId })
         }
         if (this.searchOrderPhone !== '') {
           orderQuery.order_phone = this.searchOrderPhone
-          // orderQuery.append({ 'order_phone': this.searchOrderPhone })
+        }
+        if (this.searchOrderStatus !== '') {
+          orderQuery.status = this.searchOrderStatus
         }
         this.$axios.get('/shop/order/downloadExcel', {
           params: orderQuery
