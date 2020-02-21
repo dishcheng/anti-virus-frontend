@@ -1,12 +1,11 @@
 <template>
   <q-page>
 
-    <q-select v-model="activeShopCode"
+    <q-select v-model="activeShop"
               :options="shopList"
               option-value="shop_code"
               option-label="shop_name"
               map-options
-              emit-value
               label="请选择供应商"/>
     <q-list style="margin-top: 20px">
       <q-item v-for="(item,index) in productList" :key="index">
@@ -92,7 +91,7 @@
         text: 1,
         dense: false,
         shopList: [],
-        activeShopCode: '',
+        activeShop: '',
         order_name: null,
         order_phone: null,
         order_address: null,
@@ -285,7 +284,7 @@
       },
       loadProductsAndAddressList () {
         this.$axios.get('/user/products', {
-          params: { 'shop_code': this.activeShopCode }
+          params: { 'shop_code': this.activeShop.shop_code }
         })
           .then((res) => {
             // let res = response.data
@@ -335,7 +334,7 @@
       this.loadShopsList()
     },
     watch: {
-      activeShopCode (newVal, oldVal) {
+      activeShop (newVal, oldVal) {
         if (newVal !== '') {
           this.loadProductsAndAddressList()
         }

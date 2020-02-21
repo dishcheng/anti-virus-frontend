@@ -22,7 +22,11 @@
     components: {},
     data () {
       return {
-        orderInfo: []
+        orderInfo: {
+          shop: {
+            kefu_qrcode:'',
+          }
+        }
       }
     },
     methods: {
