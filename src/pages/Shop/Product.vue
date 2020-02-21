@@ -28,13 +28,13 @@
             <q-toggle
               v-model="props.row.is_public"
               color="green"
-              label="是否展示"
               left-label
+              @input="changePublicStatus(props.row.code,props.row.is_public)"
             />
 
           </q-td>
           <q-td>
-            <q-btn color="red" round @click="deleteAction(props.row.id)" label="删除"/>
+            <q-btn color="red" round @click="deleteAction(props.row.code,props.row.name)" label="删除"/>
           </q-td>
         </q-tr>
       </template>
@@ -49,7 +49,7 @@
     { name: 'code', align: 'center', label: '产品编号', field: 'code' },
     { name: 'name', align: 'center', label: '名称', field: 'name' },
     { name: 'single_price', align: 'center', label: '单价', field: 'single_price' },
-    { name: 'is_public', align: 'center', label: '单价', field: 'is_public' },
+    { name: 'is_public', align: 'center', label: '是否展示', field: 'is_public' },
     { name: 'handle', align: 'center', label: '操作', field: 'handle' },
   ]
   const data = []
@@ -74,8 +74,34 @@
           })
         this.tableLoading = false
       },
-      deleteAction (id) {
-
+      deleteAction (code,name) {
+        console.log(code,name)
+        this.$q.dialog({
+          title: '确认删除' + name + '?',
+          message: '',
+          cancel: true,
+          persistent: true
+        }).onOk(() => {
+          // console.log('>>>> OK')
+          this.$axios.delete('/shop/product/' + code)
+            .then((res) => {
+              if (res.status_code === 200) {
+                this.$q.notify({
+                  color: 'primary',
+                  position: 'top',
+                  message: '删除成功',
+                })
+              }
+            })
+            .catch((e) => {
+            })
+        }).onOk(() => {
+          // console.log('>>>> second OK catcher')
+        }).onCancel(() => {
+          // console.log('>>>> Cancel')
+        }).onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        })
       },
       toggleCreateFrom () {
         this.$q.dialog({
@@ -97,6 +123,7 @@
           // is_public: this.is_public,
           // ...更多属性...
         }).onOk((data) => {
+          //创建产品
           this.$axios.post('/shop/product', data)
             .then((res) => {
               if (res.status_code === 200) {
@@ -115,6 +142,23 @@
         }).onDismiss(() => {
           console.log('Called on OK or Cancel')
         })
+      },
+      changePublicStatus (code, status) {
+        //修改产品状态
+        this.$axios.put('/shop/product/' + code, {
+          is_public: status
+        })
+          .then((res) => {
+            if (res.status_code === 200) {
+              this.$q.notify({
+                color: 'primary',
+                position: 'top',
+                message: '修改成功',
+              })
+            }
+          })
+          .catch((e) => {
+          })
       }
     },
     created () {
