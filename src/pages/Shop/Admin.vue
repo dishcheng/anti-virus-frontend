@@ -83,9 +83,6 @@
 
           <q-td key="order_total" :props="props">
             {{ props.row.order_total }}
-            <!--            <q-popup-edit v-model="props.row.order_total">-->
-            <!--              <q-input v-model="props.row.order_total" dense autofocus/>-->
-            <!--            </q-popup-edit>-->
           </q-td>
 
 
@@ -117,6 +114,7 @@
     { name: 'order_address_detail', align: 'center', label: '详细地址', field: 'order_address_detail' },
     { name: 'order_remark', align: 'center', label: '用户备注', field: 'order_remark' },
     { name: 'created_at', align: 'center', label: '提交时间', field: 'created_at' },
+    { name: 'order_total', align: 'center', label: '订单金额', field: 'order_total' },
     { name: 'order_status', align: 'center', label: '状态标记', field: 'order_status' },
     { name: 'handle', align: 'center', label: '操作', field: 'handle' },
   ]
