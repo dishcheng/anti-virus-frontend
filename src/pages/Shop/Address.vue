@@ -4,9 +4,11 @@
       :data="data"
       :columns="columns"
       title="地址管理"
-      :rows-per-page-options="[]"
       row-key="id"
       :loading="tableLoading"
+      :pagination.sync="pagination"
+      :rows-per-page-options=[]
+      @request="loadData"
     >
       <template v-slot:top>
         <q-btn color="primary" @click="toggleCreateFrom" label="创建"/>
@@ -61,16 +63,37 @@
         columns,
         tableLoading: true,
         showCreateFrom: false,
+        pagination: {
+          sortBy: 'desc',
+          descending: false,
+          page: 1,
+          rowsPerPage: 15,
+          rowsNumber: 0
+        },
       }
     },
+    mounted () {
+      this.loadData({
+        pagination: this.pagination,
+        filter: undefined
+      })
+    },
     methods: {
-      loadData () {
+      loadData (props) {
         this.tableLoading = true
-        this.$axios.get('/shop/address', {})
+        const { page, rowsPerPage, sortBy, descending } = props.pagination
+        this.$axios.get('/shop/address', {
+          params: {
+            page: page
+          }
+        })
           .then((res) => {
             // let res = response.data
             if (res.status_code === 200) {
               this.data = res.data
+              this.pagination.page = res.meta.current_page
+              this.pagination.rowsPerPage = res.meta.per_page
+              this.pagination.rowsNumber = res.meta.total
             }
           })
           .catch((e) => {
@@ -151,9 +174,8 @@
       }
 
     },
-    created () {
-      this.loadData()
-    }
+    // created () {
+    // }
   }
 </script>
 
