@@ -6,6 +6,17 @@
         待支付金额：{{orderInfo.order_total}}
       </p>
       <p>
+        用户姓名：{{orderInfo.order_name}}
+      </p>
+      <p>
+        联系方式：{{orderInfo.order_phone}}
+      </p>
+
+      <p>
+        供应商名称：{{orderInfo.shop.shop_name}}
+      </p>
+
+      <p>
         系统提示：<span style="color: red">{{order_detail_sys_notice}}</span>
       </p>
       <q-img
@@ -27,6 +38,7 @@
           order_total: '',
           shop: {
             kefu_qrcode: '',
+            shop_name:''
           }
         }
       }
