@@ -6,12 +6,15 @@
               option-label="shop_name"
               map-options
               label="请选择供应商"/>
-    <q-list style="margin-top: 20px">
+    <q-list style="margin-top: 20px" bordered separator>
       <q-item v-for="(item,index) in productList" :key="index">
         <q-item-section>
           <q-item-label>{{item.name}}</q-item-label>
-          <q-item-label caption lines="10">
+          <q-item-label caption>
             {{item.desc}}
+          </q-item-label>
+          <q-item-label caption>
+            <q-btn v-show="item.img!==''" color="white" text-color="blue" label="查看图片"/>
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -38,7 +41,7 @@
       </q-item>
 
 
-      <form @submit.prevent.stop="orderConfirm" class="q-gutter-md">
+      <form @submit.prevent.stop="submitOrder" class="q-gutter-md">
 
 
         <q-input v-model="order_name"
@@ -202,19 +205,6 @@
         })
         this.order_total = sum
       },
-      orderConfirm () {
-        this.$q.dialog({
-          title: '供应商提示',
-          message: this.activeShop.shop_message
-        }).onOk(() => {
-          // console.log('OK')
-          this.submitOrder();
-        }).onCancel(() => {
-          // console.log('Cancel')
-        }).onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        })
-      },
       submitOrder () {
         this.$refs.order_name.validate()
         this.$refs.order_phone.validate()
@@ -238,39 +228,54 @@
           })
           return
         }
-        let p = []
-        this.productList.forEach((item) => {
-          //遍历prodAllPrice这个字段，并累加
-          if (item.num > 0) {
-            p.push(item)
-          }
-        })
+        this.$q.dialog({
+          title: '供应商提示',
+          message: this.activeShop.shop_message,
+          cancel: '取消',
+          ok: '确认下单',
+          persistent: true,
+        }).onOk(() => {
+          // console.log('OK')
 
-        let order_data = {
-          order_name: this.order_name,
-          order_phone: this.order_phone,
-          order_address: this.order_address,
-          order_address_detail: this.order_address_detail,
-          order_remark: this.order_remark,
-          order_products: p
-        }
-        this.$axios.post('/user/order', order_data)
-          .then((res) => {
-            if (res.status_code === 200) {
-              console.log(res.data)
-              this.$router.push({
-                name: 'order_detail',
-                query: {
-                  orderId: res.data.order_id,
-                },
-                params: {
-                  order_total: res.data.order_total,
-                }
-              })
+          let p = []
+          this.productList.forEach((item) => {
+            //遍历prodAllPrice这个字段，并累加
+            if (item.num > 0) {
+              p.push(item)
             }
           })
-          .catch((e) => {
-          })
+
+          let order_data = {
+            order_name: this.order_name,
+            order_phone: this.order_phone,
+            order_address: this.order_address,
+            order_address_detail: this.order_address_detail,
+            order_remark: this.order_remark,
+            order_products: p
+          }
+          this.$axios.post('/user/order', order_data)
+            .then((res) => {
+              if (res.status_code === 200) {
+                console.log(res.data)
+                this.$router.push({
+                  name: 'order_detail',
+                  query: {
+                    orderId: res.data.order_id,
+                  },
+                  params: {
+                    order_total: res.data.order_total,
+                  }
+                })
+              }
+            })
+            .catch((e) => {
+            })
+
+        }).onCancel(() => {
+          // console.log('Cancel')
+        }).onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        })
       },
       loadShopsList () {
         this.$axios.get('/user/shops')
@@ -305,14 +310,8 @@
               let tempProductData = []
               res.data.products.forEach((item) => {
                 //遍历prodAllPrice这个字段，并累加
-                tempProductData.push(
-                  {
-                    'code': item.code,
-                    'name': item.name,
-                    'single_price': item.single_price,
-                    'desc': item.desc,
-                    'num': 0
-                  })
+                item.num = 0
+                tempProductData.push(item)
               })
               this.productList = tempProductData
               this.address_options = res.data.address
