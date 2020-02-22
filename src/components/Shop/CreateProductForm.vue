@@ -1,43 +1,41 @@
 <template>
-  <q-form>
-    <q-dialog ref="dialog" @hide="onDialogHide">
-      <q-card class="q-dialog-plugin" style="height: 600px;width: 500px;padding: 10px">
-        <q-input hint="标题" v-model="name">
-          <template v-slot:before>
-            <span>标题</span>
-          </template>
-        </q-input>
+  <q-dialog ref="dialog" @hide="onDialogHide">
+    <q-card class="q-dialog-plugin" style="height: 600px;width: 500px;padding: 10px">
+      <q-input hint="标题" v-model="name">
+        <template v-slot:before>
+          <span>标题</span>
+        </template>
+      </q-input>
 
-        <q-input hint="描述" type="textarea" v-model="desc">
-          <template v-slot:before>
-            <span>描述</span>
-          </template>
-        </q-input>
+      <q-input hint="描述" type="textarea" v-model="desc">
+        <template v-slot:before>
+          <span>描述</span>
+        </template>
+      </q-input>
 
-        <q-input hint="单价" v-model.number="single_price"
-                 type="number">
-          <template v-slot:before>
-            <span>单价</span>
-          </template>
-          <template v-slot:append>
-            <span>元</span>
-          </template>
-        </q-input>
+      <q-input hint="单价" v-model.number="single_price"
+               type="number">
+        <template v-slot:before>
+          <span>单价</span>
+        </template>
+        <template v-slot:append>
+          <span>元</span>
+        </template>
+      </q-input>
 
-        <q-toggle
-          v-model="is_public"
-          color="green"
-          label="是否展示"
-          left-label
-        />
+      <q-toggle
+        v-model="is_public"
+        color="green"
+        label="是否展示"
+        left-label
+      />
 
-        <q-card-actions align="right">
-          <q-btn color="primary" label="创建" @click="onOKClick"/>
-          <q-btn color="primary" label="取消" @click="onCancelClick"/>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-  </q-form>
+      <q-card-actions align="right">
+        <q-btn color="primary" label="创建" @click="onOKClick"/>
+        <q-btn color="primary" label="取消" @click="onCancelClick"/>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -78,6 +76,13 @@
         // 按OK，在隐藏QDialog之前
         // 发出“ok”事件（带有可选的有效负载）
         // 是必需的
+        if (
+          this.name === '' ||
+          this.desc === '' ||
+          this.single_price === ''
+        ) {
+          return
+        }
         this.$emit('ok', {
           name: this.name,
           desc: this.desc,
