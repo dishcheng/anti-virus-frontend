@@ -30,6 +30,20 @@
         left-label
       />
 
+      <q-uploader
+        accept=".jpg, image/*"
+        label="图片上传(非必填)"
+        color="purple"
+        square
+        flat
+        auto-upload
+        bordered
+        :factory="uploadImg"
+        field-name="file"
+        @uploaded="afterUploadImg"
+        style="max-width: 200px;margin-left: 60px"
+      />
+
       <q-card-actions align="right">
         <q-btn color="primary" label="创建" @click="onOKClick"/>
         <q-btn color="primary" label="取消" @click="onCancelClick"/>
@@ -39,6 +53,9 @@
 </template>
 
 <script>
+  import { LocalStorage } from 'quasar'
+  import requestInfo from '../../boot/requestHost'
+
   export default {
     name: 'CreateShopForm',
     data () {
@@ -47,6 +64,7 @@
         desc: '',
         single_price: '',
         is_public: true,
+        img: '',
       }
     },
     props: [
@@ -88,6 +106,7 @@
           desc: this.desc,
           single_price: this.single_price,
           is_public: this.is_public,
+          img: this.img,
         })
         // 或带有有效负载：this.$emit('ok', { ... })
         // 然后隐藏对话框
@@ -96,6 +115,23 @@
       onCancelClick () {
         // 我们只需要隐藏对话框
         this.hide()
+      },
+      uploadImg (uploadImg) {
+        return new Promise((resolve, reject) => {
+          // 从您的存储中检索JWT令牌。
+          const token = LocalStorage.getItem('shop_token')
+          resolve({
+            url: requestInfo.host + 'shop/imgUpload',
+            method: 'post',
+            headers: [
+              { name: 'Authorization', value: token }
+            ],
+          })
+        })
+      },
+      afterUploadImg (info) {
+
+        console.log(info)
       }
     }
   }
