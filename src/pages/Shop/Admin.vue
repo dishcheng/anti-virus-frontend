@@ -1,10 +1,9 @@
 <template>
   <div class="q-pa-md">
     <q-table
+      title="订单列表"
       :data="data"
       :columns="columns"
-      title="订单列表"
-      :rows-per-page-options="[]"
       row-key="id"
       :loading="tableLoading"
     >

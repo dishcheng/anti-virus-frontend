@@ -65,6 +65,7 @@
     },
     methods: {
       loadData () {
+        this.tableLoading = true
         this.$axios.get('/shop/address', {})
           .then((res) => {
             // let res = response.data
@@ -129,9 +130,13 @@
         })
       },
       changePublicStatus (id, status) {
-        this.$axios.put('/shop/address/' + id, {
-          is_public: status
-        })
+        this.changeAddressRequest(id, { is_public: status })
+      },
+      changeAddress (id, address) {
+        this.changeAddressRequest(id, { address: address })
+      },
+      changeAddressRequest (id, object) {
+        this.$axios.put('/shop/address/' + id, object)
           .then((res) => {
             if (res.status_code === 200) {
               this.$q.notify({
@@ -143,23 +148,7 @@
           })
           .catch((e) => {
           })
-      },
-      changeAddress (id, status) {
-        this.$axios.put('/shop/address/' + id, {
-          address: status
-        })
-          .then((res) => {
-            if (res.status_code === 200) {
-              this.$q.notify({
-                color: 'primary',
-                position: 'top',
-                message: '修改成功',
-              })
-            }
-          })
-          .catch((e) => {
-          })
-      },
+      }
 
     },
     created () {

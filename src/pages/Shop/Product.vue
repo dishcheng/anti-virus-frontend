@@ -26,7 +26,7 @@
           </q-td>
 
           <q-td key="desc" :props="props">
-              {{ props.row.desc }}
+            {{ props.row.desc }}
             <q-popup-edit v-model="props.row.desc" buttons title="编辑描述"
                           @save="changeDesc(props.row.code,props.row.desc)"
             >
@@ -120,8 +120,6 @@
             })
             .catch((e) => {
             })
-        }).onOk(() => {
-          // console.log('>>>> second OK catcher')
         }).onCancel(() => {
           // console.log('>>>> Cancel')
         }).onDismiss(() => {
@@ -155,63 +153,25 @@
       },
       changePublicStatus (code, status) {
         //修改产品状态
-        this.$axios.put('/shop/product/' + code, {
-          is_public: status
-        })
-          .then((res) => {
-            if (res.status_code === 200) {
-              this.$q.notify({
-                color: 'primary',
-                position: 'top',
-                message: '修改成功',
-              })
-            }
-          })
-          .catch((e) => {
-          })
+        this.changeProductRequest(code, { is_public: status })
       },
       changeName (code, name) {
         console.log(name)
         //修改产品名称
-        this.$axios.put('/shop/product/' + code, {
-          name: name
-        })
-          .then((res) => {
-            if (res.status_code === 200) {
-              this.$q.notify({
-                color: 'primary',
-                position: 'top',
-                message: '修改成功',
-              })
-            }
-          })
-          .catch((e) => {
-          })
+        this.changeProductRequest(code, { name: name })
       },
       changeSinglePrice (code, price) {
-        console.log(code, price)
         //修改产品价格
-        this.$axios.put('/shop/product/' + code, {
-          single_price: price
-        })
-          .then((res) => {
-            if (res.status_code === 200) {
-              this.$q.notify({
-                color: 'primary',
-                position: 'top',
-                message: '修改成功',
-              })
-            }
-          })
-          .catch((e) => {
-          })
+        console.log(code, price)
+        this.changeProductRequest(code, { single_price: price })
       },
       changeDesc (code, desc) {
         console.log(code, desc)
         //修改产品描述
-        this.$axios.put('/shop/product/' + code, {
-          desc: desc
-        })
+        this.changeProductRequest(code, { desc: desc })
+      },
+      changeProductRequest (code, object) {
+        this.$axios.put('/shop/product/' + code, object)
           .then((res) => {
             if (res.status_code === 200) {
               this.$q.notify({
@@ -223,8 +183,7 @@
           })
           .catch((e) => {
           })
-      },
-
+      }
     },
     created () {
       this.loadData()
