@@ -31,7 +31,7 @@
           style="min-width: 250px; max-width: 300px"
         />
 
-        <q-btn color="primary" @click="loadOrders" label="查询"/>
+        <q-btn color="primary" @click="search" label="查询"/>
 
         <q-btn style="margin-left: 2px" color="primary" @click="downloadExcel" label="导出"/>
       </template>
@@ -200,6 +200,12 @@
     },
 
     methods: {
+      search(){
+        this.loadOrders({
+          pagination: this.pagination,
+          filter: undefined
+        })
+      },
       loadOrders (props) {
         const { page, rowsPerPage, sortBy, descending } = props.pagination
         this.tableLoading = false
