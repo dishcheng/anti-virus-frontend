@@ -3,7 +3,7 @@
     <div class="fixed-top full-width content-center">
       订单ID：{{$route.query.orderId}},
       <p>
-        待支付金额：{{$route.params.order_total}}
+        待支付金额：{{orderInfo.order_total}}
       </p>
       <p>
         系统提示：<span style="color: red">{{order_detail_sys_notice}}</span>
@@ -24,6 +24,7 @@
       return {
         order_detail_sys_notice: '',
         orderInfo: {
+          order_total: '',
           shop: {
             kefu_qrcode: '',
           }

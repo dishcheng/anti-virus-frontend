@@ -20,7 +20,7 @@
     components: {},
     data () {
       return {
-        kefuqrcode: require('../assets/kefuqrcode.jpeg'),
+        kefuqrcode: require('../statics/kefuqrcode.jpeg'),
         shop_join_in_needs: [],
       }
     },
