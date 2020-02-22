@@ -6,19 +6,17 @@
       :columns="columns"
       row-key="id"
       :loading="tableLoading"
+      :pagination.sync="pagination"
+      :rows-per-page-options=[]
+      @request="loadOrders"
     >
 
       <template v-slot:top>
         <q-space/>
         <q-input clearable dense debounce="300" hint="检索订单编号" color="primary" v-model="searchOrderId">
-<!--          <template v-slot:append>-->
-<!--            <q-icon name="search"/>-->
-<!--          </template>-->
         </q-input>
-        <q-input clearable style="margin-left: 10px" dense debounce="300" hint="检索用户手机号" color="primary" v-model="searchOrderPhone">
-<!--          <template v-slot:append>-->
-<!--            <q-icon name="search"/>-->
-<!--          </template>-->
+        <q-input clearable style="margin-left: 10px" dense debounce="300" hint="检索用户手机号" color="primary"
+                 v-model="searchOrderPhone">
         </q-input>
 
         <q-select
@@ -183,11 +181,27 @@
             'label': '已退款',
             'value': 'refunded',
           },
-        ]
+        ],
+        pagination: {
+          sortBy: 'desc',
+          descending: false,
+          page: 1,
+          rowsPerPage: 15,
+          rowsNumber: 0
+        },
       }
     },
+    mounted () {
+      // get initial data from server (1st page)
+      this.loadOrders({
+        pagination: this.pagination,
+        filter: undefined
+      })
+    },
+
     methods: {
-      loadOrders () {
+      loadOrders (props) {
+        const { page, rowsPerPage, sortBy, descending } = props.pagination
         this.tableLoading = false
         let orderQuery = {}
         if (this.searchOrderId !== '') {
@@ -199,6 +213,7 @@
         if (this.searchOrderStatus !== '') {
           orderQuery.status = this.searchOrderStatus
         }
+        orderQuery.page = page
         this.$axios.get('/shop/order', {
           params: orderQuery
         })
@@ -206,13 +221,9 @@
             // let res = response.data
             if (res.status_code === 200) {
               this.data = res.data
-            } else {
-              this.$q.notify({
-                color: 'negative',
-                position: 'top',
-                message: res.message,
-                icon: 'report_problem'
-              })
+              this.pagination.page = res.meta.current_page
+              this.pagination.rowsPerPage = res.meta.per_page
+              this.pagination.rowsNumber = res.meta.total
             }
           })
           .catch((e) => {
@@ -309,9 +320,9 @@
 
       }
     },
-    created () {
-      this.loadOrders();
-    }
+    // created () {
+    //   this.loadOrders()
+    // }
   }
 </script>
 

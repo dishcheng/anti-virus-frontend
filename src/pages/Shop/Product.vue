@@ -4,9 +4,11 @@
       :data="data"
       :columns="columns"
       title="产品管理"
-      :rows-per-page-options="[]"
       row-key="code"
+      :pagination.sync="pagination"
+      :rows-per-page-options=[]
       :loading="tableLoading"
+      @request="loadData"
     >
       <template v-slot:top>
         <q-btn color="primary" @click="toggleCreateFrom" label="创建"/>
@@ -84,15 +86,34 @@
         data,
         columns,
         tableLoading: true,
+        pagination: {
+          sortBy: 'desc',
+          descending: false,
+          page: 1,
+          rowsPerPage: 15,
+          rowsNumber: 0
+        },
       }
     },
     methods: {
-      loadData () {
-        this.$axios.get('/shop/product', {})
+      loadData (props) {
+        console.log(props.pagination)
+        const { page, rowsPerPage, sortBy, descending } = props.pagination
+        let QueryObject = {
+          page:page,
+        }
+        console.log(QueryObject)
+
+        this.$axios.get('/shop/product', {
+          params:QueryObject
+        })
           .then((res) => {
             // let res = response.data
             if (res.status_code === 200) {
               this.data = res.data
+              this.pagination.page = res.meta.current_page
+              this.pagination.rowsPerPage = res.meta.per_page
+              this.pagination.rowsNumber = res.meta.total
             }
           })
           .catch((e) => {
@@ -185,9 +206,16 @@
           })
       }
     },
-    created () {
-      this.loadData()
-    }
+    mounted () {
+      this.loadData({
+        pagination: this.pagination,
+        filter: undefined
+      })
+    },
+
+    // created () {
+    //   this.loadData()
+    // }
   }
 </script>
 
