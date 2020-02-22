@@ -36,12 +36,14 @@
         color="purple"
         square
         flat
+        :multiple="false"
+        no-thumbnails
         auto-upload
         bordered
         :factory="uploadImg"
         field-name="file"
         @uploaded="afterUploadImg"
-        style="max-width: 200px;margin-left: 60px"
+        style="max-width: 250px;margin-left: 60px"
       />
 
       <q-card-actions align="right">
@@ -130,7 +132,6 @@
         })
       },
       afterUploadImg (info) {
-
         console.log(info)
       }
     }
