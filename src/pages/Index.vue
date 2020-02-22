@@ -237,6 +237,7 @@
             message: '请选择商品',
             icon: 'report_problem'
           })
+          return
         }
         let p = []
         this.productList.forEach((item) => {
