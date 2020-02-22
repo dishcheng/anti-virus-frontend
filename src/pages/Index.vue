@@ -1,6 +1,5 @@
 <template>
   <q-page>
-
     <q-select v-model="activeShop"
               :options="shopList"
               option-value="shop_code"

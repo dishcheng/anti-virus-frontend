@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="fixed-top full-width content-center">
+    <div class="full-width content-center">
       订单ID：{{$route.query.orderId}},
       <p>
         待支付金额：{{orderInfo.order_total}}
