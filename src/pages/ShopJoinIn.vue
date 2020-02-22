@@ -1,11 +1,9 @@
 <template>
   <q-page>
     入驻条件：
-    <ul>
-      <li>1、具备公司资质（提供营业执照图片）</li>
-      <li>2、有村级以上单位担保信用</li>
-      <li>3、懂电脑操作</li>
-    </ul>
+    <ol>
+      <li v-for="(item,index) in shop_join_in_needs">{{item}}</li>
+    </ol>
     <p class="text-center">
       符合条件请，长按以下二维码，办理入驻
     </p>
@@ -22,9 +20,26 @@
     components: {},
     data () {
       return {
-        kefuqrcode: require('../assets/kefuqrcode.jpeg')
+        kefuqrcode: require('../assets/kefuqrcode.jpeg'),
+        shop_join_in_needs: [],
       }
     },
+    mounted(){
+      this.getConfig();
+    },
+    methods: {
+      getConfig () {
+        this.$axios.get('/user/config/')
+          .then((res) => {
+            console.log(res.data)
+            if (res.status_code === 200) {
+              this.shop_join_in_needs = res.data.shop_join_in_needs
+            }
+          })
+          .catch((e) => {
+          })
+      },
+    }
   }
 </script>
 

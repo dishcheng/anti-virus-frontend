@@ -6,7 +6,7 @@
         待支付金额：{{$route.params.order_total}}
       </p>
       <p>
-        请截图保存本页面并长按以下图片，添加以下客服进行付款并得到客服确认回复，如已付款但未得到客服确认导致资金损失概不负责
+        系统提示：<span style="color: red">{{order_detail_sys_notice}}</span>
       </p>
       <q-img
         :src="orderInfo.shop.kefu_qrcode"
@@ -22,9 +22,10 @@
     components: {},
     data () {
       return {
+        order_detail_sys_notice: '',
         orderInfo: {
           shop: {
-            kefu_qrcode:'',
+            kefu_qrcode: '',
           }
         }
       }
@@ -42,10 +43,22 @@
           })
           .catch((e) => {
           })
-      }
+      },
+      getConfig () {
+        this.$axios.get('/user/config/')
+          .then((res) => {
+            console.log(res.data)
+            if (res.status_code === 200) {
+              this.order_detail_sys_notice = res.data.order_detail_sys_notice
+            }
+          })
+          .catch((e) => {
+          })
+      },
     },
-    created () {
+    mounted () {
       this.getOrderDetail()
+      this.getConfig()
     }
   }
 </script>
