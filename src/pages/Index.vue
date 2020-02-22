@@ -39,7 +39,7 @@
       </q-item>
 
 
-      <form @submit.prevent.stop="submitOrder" class="q-gutter-md">
+      <form @submit.prevent.stop="orderConfirm" class="q-gutter-md">
 
 
         <q-input v-model="order_name"
@@ -203,6 +203,19 @@
         })
         this.order_total = sum
       },
+      orderConfirm () {
+        this.$q.dialog({
+          title: '供应商提示',
+          message: this.activeShop.shop_message
+        }).onOk(() => {
+          // console.log('OK')
+          this.submitOrder();
+        }).onCancel(() => {
+          // console.log('Cancel')
+        }).onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        })
+      },
       submitOrder () {
         this.$refs.order_name.validate()
         this.$refs.order_phone.validate()
@@ -330,7 +343,7 @@
       },
     },
     computed: {},
-    created () {
+    mounted () {
       this.loadShopsList()
     },
     watch: {
