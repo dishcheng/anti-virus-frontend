@@ -10,11 +10,11 @@
       <q-item v-for="(item,index) in productList" :key="index">
         <q-item-section>
           <q-item-label>{{item.name}}</q-item-label>
+          <!--          <q-item-label caption>-->
+          <!--            {{item.desc}}-->
+          <!--          </q-item-label>-->
           <q-item-label caption>
-            {{item.desc}}
-          </q-item-label>
-          <q-item-label caption>
-            <q-btn v-show="item.img!==''" color="white" text-color="blue" label="查看图片"/>
+            <q-btn @click="alertProductInfo(item)" color="white" text-color="blue" label="查看信息"/>
           </q-item-label>
         </q-item-section>
         <q-item-section side top>
@@ -85,6 +85,8 @@
   </q-page>
 </template>
 <script>
+  import ProductItemAlert from '../components/Index/ProductItemAlert'
+
   export default {
     name: 'PageIndex',
     components: {},
@@ -299,6 +301,30 @@
               icon: 'report_problem'
             })
           })
+      },
+      alertProductInfo (productItem) {
+        this.$q.dialog({
+          component: ProductItemAlert,
+          // 如果要访问自定义组件中的
+          // 路由管理器、Vuex存储等,
+          // 则为可选：
+          parent: this, // 成为该Vue节点的子元素
+                        // （“this”指向您的Vue组件）
+                        // （此属性在<1.1.0中称为“root”
+                        //  仍然可以使用，但建议切换到
+                        //  更合适的“parent”名称）
+
+          // 传递给组件的属性
+          // （上述“component”和“parent”属性除外）：
+          productItem: productItem
+          // ...更多属性...
+        }).onOk(() => {
+          console.log('OK')
+        }).onCancel(() => {
+          console.log('Cancel')
+        }).onDismiss(() => {
+          console.log('Called on OK or Cancel')
+        })
       },
       loadProductsAndAddressList () {
         this.$axios.get('/user/products', {
