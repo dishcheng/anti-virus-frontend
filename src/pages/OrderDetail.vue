@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="full-width content-center">
+    <div class="full-width ">
       订单ID：{{$route.query.orderId}},
       <p>
         待支付金额：{{orderInfo.order_total}}
@@ -19,6 +19,15 @@
       <p>
         系统提示：<span style="color: red">{{order_detail_sys_notice}}</span>
       </p>
+
+      <q-btn
+        class="full-width"
+        style="margin-bottom: 10px"
+        v-go-back=" '/' "
+        color="primary"
+        label="立即返回"
+      />
+
       <q-img
         :src="orderInfo.shop.kefu_qrcode"
         style="width: 100%"
@@ -38,7 +47,7 @@
           order_total: '',
           shop: {
             kefu_qrcode: '',
-            shop_name:''
+            shop_name: ''
           }
         }
       }
