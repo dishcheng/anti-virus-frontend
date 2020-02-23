@@ -122,7 +122,7 @@
     data () {
       return {
         slide: '1',
-        showBanner: true,
+        showBanner: false,
         bannerList: [
           {
             'id': '1',
