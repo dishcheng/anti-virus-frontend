@@ -1,6 +1,7 @@
 <template>
   <q-page>
     <q-carousel
+      v-show="showBanner"
       v-model="slide"
       transition-prev="scale"
       transition-next="scale"
@@ -121,10 +122,11 @@
     data () {
       return {
         slide: '1',
+        showBanner: true,
         bannerList: [
           {
             'id': '1',
-            'text': '共度时艰，少出门',
+            'text': '共度时艰',
           },
         ],
         text: 1,
