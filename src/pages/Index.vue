@@ -1,5 +1,26 @@
 <template>
   <q-page>
+    <q-carousel
+      v-model="slide"
+      transition-prev="scale"
+      transition-next="scale"
+      swipeable
+      animated
+      control-color="white"
+      navigation
+      padding
+      arrows
+      height="200px"
+      class="bg-primary text-white shadow-1 rounded-borders"
+    >
+      <q-carousel-slide :name="item.id" class="column no-wrap flex-center" v-for="(item,index) in bannerList"
+                        :key="index">
+        <div class="q-mt-md text-center">
+          {{ item.text }}
+        </div>
+      </q-carousel-slide>
+    </q-carousel>
+
     <q-select v-model="activeShop"
               :options="shopList"
               option-value="shop_code"
@@ -97,6 +118,13 @@
     components: {},
     data () {
       return {
+        slide: '1',
+        bannerList: [
+          {
+            'id': '1',
+            'text': '共度时艰，少出门',
+          },
+        ],
         text: 1,
         dense: false,
         shopList: [],
