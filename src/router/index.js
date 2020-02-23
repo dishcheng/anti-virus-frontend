@@ -28,7 +28,7 @@ export default function (/* { store, ssrContext } */) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
   })
-  const whiteList = ['/admin/login', '/', '/order_detail','/shopJoinIn'] // no redirect whitelist
+  const whiteList = ['/admin/login', '/', '/order_detail', '/shopJoinIn', '/showAdminPageIntroduce'] // no redirect whitelist
   Router.beforeEach(async (to, from, next) => {
     // console.log(to.path, from.path)
     // determine whether the user has logged in

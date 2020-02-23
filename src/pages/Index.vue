@@ -109,6 +109,9 @@
         <div style="margin-top: 20px">
           <q-btn label="供应商入驻" class="full-width" type="button" @click="shopJoinIn" color="primary"/>
         </div>
+        <div style="margin-top: 20px">
+          <q-btn label="管理后台" class="full-width" type="button" @click="showAdminPageIntroduce" color="primary"/>
+        </div>
       </form>
     </q-list>
   </q-page>
@@ -388,6 +391,11 @@
       shopJoinIn () {
         this.$router.push({
           name: 'shopJoinIn'
+        })
+      },
+      showAdminPageIntroduce () {
+        this.$router.push({
+          name: 'showAdminPageIntroduce'
         })
       },
     },

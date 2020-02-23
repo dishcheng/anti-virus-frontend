@@ -18,6 +18,11 @@ const routes = [
         component: () => import('pages/ShopJoinIn.vue'),
         name: 'shopJoinIn',
       },
+      {
+        path: 'showAdminPageIntroduce',
+        component: () => import('pages/showAdminPageIntroduce.vue'),
+        name: 'showAdminPageIntroduce',
+      },
     ]
   },
   {
