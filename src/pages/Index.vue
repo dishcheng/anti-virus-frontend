@@ -14,7 +14,8 @@
       class="bg-primary text-white shadow-1 rounded-borders"
     >
       <q-carousel-slide :name="item.id" class="column no-wrap flex-center" v-for="(item,index) in bannerList"
-                        :key="index">
+                        :key="index"
+      >
         <div class="q-mt-md text-center">
           {{ item.text }}
         </div>
@@ -23,6 +24,7 @@
 
     <q-select v-model="activeShop"
               :options="shopList"
+              option-disable="disable"
               option-value="shop_code"
               option-label="shop_name"
               map-options
@@ -317,22 +319,9 @@
           .then((res) => {
             if (res.status_code === 200) {
               this.shopList = res.data
-            } else {
-              this.$q.notify({
-                color: 'negative',
-                position: 'top',
-                message: res.message,
-                icon: 'report_problem'
-              })
             }
           })
           .catch((e) => {
-            this.$q.notify({
-              color: 'negative',
-              position: 'top',
-              message: e.message,
-              icon: 'report_problem'
-            })
           })
       },
       alertProductInfo (productItem) {

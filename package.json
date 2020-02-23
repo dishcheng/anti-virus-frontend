@@ -2,7 +2,7 @@
   "name": "quasar-cli",
   "version": "0.0.1",
   "description": "社区微商城",
-  "productName": "社区微商城--测试中",
+  "productName": "社区微商城",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "caicheng <caicheng@lvbaoyun.com>",
