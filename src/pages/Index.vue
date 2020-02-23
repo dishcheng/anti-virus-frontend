@@ -6,10 +6,15 @@
               option-label="shop_name"
               map-options
               label="请选择供应商"/>
+    <div v-show="activeShop.business_license_img">
+      营业执照：
+      <q-img :src="activeShop.business_license_img"></q-img>
+    </div>
     <q-list style="margin-top: 20px" bordered separator>
       <q-item v-for="(item,index) in productList" :key="index">
         <q-item-section>
           <q-item-label>{{item.name}}</q-item-label>
+          <q-item-label>单价：{{item.single_price}}元</q-item-label>
           <!--          <q-item-label caption>-->
           <!--            {{item.desc}}-->
           <!--          </q-item-label>-->

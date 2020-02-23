@@ -30,21 +30,19 @@
         left-label
       />
 
-      <q-uploader
-        accept=".jpg, image/*"
-        label="图片上传(非必填)"
-        color="purple"
-        square
-        flat
-        :multiple="false"
-        no-thumbnails
-        auto-upload
-        bordered
-        :factory="uploadImg"
-        field-name="file"
-        @uploaded="afterUploadImg"
-        style="max-width: 250px;margin-left: 60px"
-      />
+<!--      <q-uploader-->
+<!--        :url="url"-->
+<!--        accept=".jpg, image/*"-->
+<!--        label="图片上传(非必填)"-->
+<!--        color="purple"-->
+<!--        no-thumbnails-->
+<!--        auto-upload-->
+<!--        bordered-->
+<!--        :headers="[{name: 'Authorization', value: token}]"-->
+<!--        field-name="file"-->
+<!--        @uploaded="afterUploadImg"-->
+<!--        style="max-width: 250px;margin-left: 60px"-->
+<!--      />-->
 
       <q-card-actions align="right">
         <q-btn color="primary" label="创建" @click="onOKClick"/>
@@ -67,6 +65,8 @@
         single_price: '',
         is_public: true,
         img: '',
+        url: '',
+        token: '',
       }
     },
     props: [
@@ -76,6 +76,10 @@
       // single_price: 'required',
       // is_public: 'required'
     ],
+    mounted () {
+      this.url = requestInfo.host + 'shop/imgUpload'
+      this.token = LocalStorage.getItem('shop_token')
+    },
     methods: {
       // 以下方法是必需的
       // (不要改变它的名称 --> "show")
@@ -118,19 +122,19 @@
         // 我们只需要隐藏对话框
         this.hide()
       },
-      uploadImg (uploadImg) {
-        return new Promise((resolve, reject) => {
-          // 从您的存储中检索JWT令牌。
-          const token = LocalStorage.getItem('shop_token')
-          resolve({
-            url: requestInfo.host + 'shop/imgUpload',
-            method: 'post',
-            headers: [
-              { name: 'Authorization', value: token }
-            ],
-          })
-        })
-      },
+      // uploadImg (uploadImg) {
+      //   return new Promise((resolve, reject) => {
+      //     // 从您的存储中检索JWT令牌。
+      //     const token = LocalStorage.getItem('shop_token')
+      //     resolve({
+      //       url: requestInfo.host + 'shop/imgUpload',
+      //       method: 'post',
+      //       headers: [
+      //         { name: 'Authorization', value: token }
+      //       ],
+      //     })
+      //   })
+      // },
       afterUploadImg (info) {
         console.log(info)
       }

@@ -5,7 +5,7 @@
       <li v-for="(item,index) in shop_join_in_needs">{{item}}</li>
     </ol>
     <p class="text-center">
-      符合条件请，长按以下二维码，办理入驻
+      符合条件请，长按以下二维码，免费办理入驻
     </p>
     <q-img
       :src="kefuqrcode"
@@ -24,8 +24,8 @@
         shop_join_in_needs: [],
       }
     },
-    mounted(){
-      this.getConfig();
+    mounted () {
+      this.getConfig()
     },
     methods: {
       getConfig () {
